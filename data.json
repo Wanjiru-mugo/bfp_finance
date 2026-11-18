@@ -480,6 +480,227 @@
       "payments": [],
       "notes": "",
       "invoice": "invoices/Inv-9D798C42-0224.pdf"
+    },
+    {
+      "id": "e23",
+      "date": "2026-08-16",
+      "guest": "",
+      "category": "Coaching",
+      "supplier": "Reidentify",
+      "ref": "Inv 9D798C42-0239",
+      "hours": 0,
+      "items": [
+        "Coaching session"
+      ],
+      "amount": 200,
+      "status": "Paid",
+      "payments": [],
+      "notes": "",
+      "invoice": "invoices/Inv-9D798C42-0239.pdf"
+    },
+    {
+      "id": "e24",
+      "date": "2026-07-09",
+      "guest": "",
+      "category": "Coaching",
+      "supplier": "",
+      "ref": "Inv 9D798C42-0236",
+      "hours": 0,
+      "items": [
+        "Coaching session"
+      ],
+      "amount": 400,
+      "status": "Paid",
+      "payments": [],
+      "notes": "",
+      "invoice": "invoices/Inv-9D798C42-0236.pdf"
+    },
+    {
+      "id": "e25",
+      "date": "2026-05-05",
+      "guest": "",
+      "category": "Coaching",
+      "supplier": "",
+      "ref": "Inv 9D798C42-0235",
+      "hours": 0,
+      "items": [
+        "Coaching session"
+      ],
+      "amount": 200,
+      "status": "Paid",
+      "payments": [],
+      "notes": "",
+      "invoice": "invoices/Inv-9D798C42-0235.pdf"
+    },
+    {
+      "id": "e26",
+      "date": "2026-05-05",
+      "guest": "",
+      "category": "Coaching",
+      "supplier": "",
+      "ref": "Inv 9D798C42-0233",
+      "hours": 0,
+      "items": [
+        "Coaching session"
+      ],
+      "amount": 200,
+      "status": "Paid",
+      "payments": [],
+      "notes": "",
+      "invoice": "invoices/Inv-9D798C42-0233.pdf"
+    },
+    {
+      "id": "e27",
+      "date": "2026-03-20",
+      "guest": "",
+      "category": "Coaching",
+      "supplier": "Reidentify",
+      "ref": "Inv 9D798C42-0232",
+      "hours": 0,
+      "items": [
+        "Coaching session"
+      ],
+      "amount": 200,
+      "status": "Paid",
+      "payments": [],
+      "notes": "",
+      "invoice": "invoices/Inv-9D798C42-0232.pdf"
+    },
+    {
+      "id": "e28",
+      "date": "2026-03-06",
+      "guest": "",
+      "category": "Coaching",
+      "supplier": "Reidentify",
+      "ref": "Inv 9D798C42-0231",
+      "hours": 0,
+      "items": [
+        "Coaching session"
+      ],
+      "amount": 200,
+      "status": "Paid",
+      "payments": [],
+      "notes": "",
+      "invoice": "invoices/Inv-9D798C42-0231.pdf"
+    },
+    {
+      "id": "e29",
+      "date": "2026-01-28",
+      "guest": "",
+      "category": "Coaching",
+      "supplier": "Reidentify",
+      "ref": "Inv 9D798C42-0227",
+      "hours": 0,
+      "items": [
+        "Coaching session"
+      ],
+      "amount": 400,
+      "status": "Paid",
+      "payments": [],
+      "notes": "",
+      "invoice": "invoices/Inv-9D798C42-0227.pdf"
+    },
+    {
+      "id": "e30",
+      "date": "2025-12-27",
+      "guest": "",
+      "category": "Coaching",
+      "supplier": "Reidentify",
+      "ref": "Inv 9D798C42-0226",
+      "hours": 0,
+      "items": [
+        "Coaching session"
+      ],
+      "amount": 400,
+      "status": "Paid",
+      "payments": [],
+      "notes": "",
+      "invoice": "invoices/Inv-9D798C42-0226.pdf"
+    },
+    {
+      "id": "e31",
+      "date": "2025-11-07",
+      "guest": "",
+      "category": "Coaching",
+      "supplier": "Reidentify",
+      "ref": "Inv 9D798C42-0225",
+      "hours": 0,
+      "items": [
+        "Coaching session"
+      ],
+      "amount": 400,
+      "status": "Paid",
+      "payments": [],
+      "notes": "",
+      "invoice": "invoices/Inv-9D798C42-0225.pdf"
+    },
+    {
+      "id": "e32",
+      "date": "2025-10-11",
+      "guest": "",
+      "category": "Coaching",
+      "supplier": "Reidentify",
+      "ref": "Inv 9D798C42-0224",
+      "hours": 0,
+      "items": [
+        "Coaching session"
+      ],
+      "amount": 200,
+      "status": "Paid",
+      "payments": [],
+      "notes": "",
+      "invoice": "invoices/Inv-9D798C42-0224.pdf"
+    },
+    {
+      "id": "e33",
+      "date": "2026-10-22",
+      "guest": "Paul",
+      "category": "Hospitality",
+      "supplier": "The Maine Mayfair restaurant",
+      "ref": "",
+      "hours": 0,
+      "items": [
+        "Meal / drinks"
+      ],
+      "amount": 135.7,
+      "status": "Paid",
+      "payments": [],
+      "notes": "",
+      "invoice": "invoices/2026-10-22-paul.pdf"
+    },
+    {
+      "id": "e34",
+      "date": "2026-08-20",
+      "guest": "Reece",
+      "category": "Hospitality",
+      "supplier": "",
+      "ref": "",
+      "hours": 0,
+      "items": [
+        "Meal / drinks"
+      ],
+      "amount": 50,
+      "status": "Paid",
+      "payments": [],
+      "notes": "podcast happened at London Bridge studio. Hospitality was within it's proximity.",
+      "invoice": "No traceable invoice"
+    },
+    {
+      "id": "e35",
+      "date": "2026-05-15",
+      "guest": "Raynee",
+      "category": "Hospitality",
+      "supplier": "",
+      "ref": "",
+      "hours": 0,
+      "items": [
+        "Meal / drinks"
+      ],
+      "amount": 50,
+      "status": "Paid",
+      "payments": [],
+      "notes": "Recording was at the Mayfair studio. Hospitality was within its proximity",
+      "invoice": "invoices/2026-05-15-raynee.pdf"
     }
   ],
   "bookings": [
