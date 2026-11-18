@@ -193,8 +193,8 @@
         "Additional camera",
         "4K footage"
       ],
-      "net": 180.0,
-      "vat": 36.0,
+      "net": 180,
+      "vat": 36,
       "amount": 216,
       "status": "Paid",
       "payments": [],
@@ -214,8 +214,8 @@
         "Studio hire + engineer",
         "4K footage"
       ],
-      "net": 90.0,
-      "vat": 18.0,
+      "net": 90,
+      "vat": 18,
       "amount": 108,
       "status": "Paid",
       "payments": [],
@@ -236,8 +236,8 @@
         "Additional camera",
         "4K footage"
       ],
-      "net": 180.0,
-      "vat": 36.0,
+      "net": 180,
+      "vat": 36,
       "amount": 216,
       "status": "Paid",
       "payments": [],
@@ -258,8 +258,8 @@
         "Additional camera",
         "4K footage"
       ],
-      "net": 180.0,
-      "vat": 36.0,
+      "net": 180,
+      "vat": 36,
       "amount": 216,
       "status": "Paid",
       "payments": [],
@@ -281,8 +281,8 @@
         "Additional camera",
         "4K footage"
       ],
-      "net": 180.0,
-      "vat": 36.0,
+      "net": 180,
+      "vat": 36,
       "amount": 216,
       "status": "Paid",
       "payments": [],
@@ -310,6 +310,176 @@
       "payments": [],
       "notes": "US$500 converted at 0.7583 (x-rates, 16 Nov 2026). Replace with the GBP amount on the bank statement.",
       "invoice": ""
+    },
+    {
+      "id": "e13",
+      "date": "2026-08-16",
+      "guest": "",
+      "category": "Coaching",
+      "supplier": "Reidentify",
+      "ref": "Inv 9D798C42-0239",
+      "hours": 0,
+      "items": [
+        "Coaching session"
+      ],
+      "amount": 200,
+      "status": "Paid",
+      "payments": [],
+      "notes": "",
+      "invoice": "invoices/Inv-9D798C42-0239.pdf"
+    },
+    {
+      "id": "e14",
+      "date": "2026-07-09",
+      "guest": "",
+      "category": "Coaching",
+      "supplier": "",
+      "ref": "Inv 9D798C42-0236",
+      "hours": 0,
+      "items": [
+        "Coaching session"
+      ],
+      "amount": 400,
+      "status": "Paid",
+      "payments": [],
+      "notes": "",
+      "invoice": "invoices/Inv-9D798C42-0236.pdf"
+    },
+    {
+      "id": "e15",
+      "date": "2026-05-05",
+      "guest": "",
+      "category": "Coaching",
+      "supplier": "",
+      "ref": "Inv 9D798C42-0235",
+      "hours": 0,
+      "items": [
+        "Coaching session"
+      ],
+      "amount": 200,
+      "status": "Paid",
+      "payments": [],
+      "notes": "",
+      "invoice": "invoices/Inv-9D798C42-0235.pdf"
+    },
+    {
+      "id": "e16",
+      "date": "2026-05-05",
+      "guest": "",
+      "category": "Coaching",
+      "supplier": "",
+      "ref": "Inv 9D798C42-0233",
+      "hours": 0,
+      "items": [
+        "Coaching session"
+      ],
+      "amount": 200,
+      "status": "Paid",
+      "payments": [],
+      "notes": "",
+      "invoice": "invoices/Inv-9D798C42-0233.pdf"
+    },
+    {
+      "id": "e17",
+      "date": "2026-03-20",
+      "guest": "",
+      "category": "Coaching",
+      "supplier": "Reidentify",
+      "ref": "Inv 9D798C42-0232",
+      "hours": 0,
+      "items": [
+        "Coaching session"
+      ],
+      "amount": 200,
+      "status": "Paid",
+      "payments": [],
+      "notes": "",
+      "invoice": "invoices/Inv-9D798C42-0232.pdf"
+    },
+    {
+      "id": "e18",
+      "date": "2026-03-06",
+      "guest": "",
+      "category": "Coaching",
+      "supplier": "Reidentify",
+      "ref": "Inv 9D798C42-0231",
+      "hours": 0,
+      "items": [
+        "Coaching session"
+      ],
+      "amount": 200,
+      "status": "Paid",
+      "payments": [],
+      "notes": "",
+      "invoice": "invoices/Inv-9D798C42-0231.pdf"
+    },
+    {
+      "id": "e19",
+      "date": "2026-01-28",
+      "guest": "",
+      "category": "Coaching",
+      "supplier": "Reidentify",
+      "ref": "Inv 9D798C42-0227",
+      "hours": 0,
+      "items": [
+        "Coaching session"
+      ],
+      "amount": 400,
+      "status": "Paid",
+      "payments": [],
+      "notes": "",
+      "invoice": "invoices/Inv-9D798C42-0227.pdf"
+    },
+    {
+      "id": "e20",
+      "date": "2025-12-27",
+      "guest": "",
+      "category": "Coaching",
+      "supplier": "Reidentify",
+      "ref": "Inv 9D798C42-0226",
+      "hours": 0,
+      "items": [
+        "Coaching session"
+      ],
+      "amount": 400,
+      "status": "Paid",
+      "payments": [],
+      "notes": "",
+      "invoice": "invoices/Inv-9D798C42-0226.pdf"
+    },
+    {
+      "id": "e21",
+      "date": "2025-11-07",
+      "guest": "",
+      "category": "Coaching",
+      "supplier": "Reidentify",
+      "ref": "Inv 9D798C42-0225",
+      "hours": 0,
+      "items": [
+        "Coaching session"
+      ],
+      "amount": 400,
+      "status": "Paid",
+      "payments": [],
+      "notes": "",
+      "invoice": "invoices/Inv-9D798C42-0225.pdf"
+    },
+    {
+      "id": "e22",
+      "date": "2025-10-11",
+      "guest": "",
+      "category": "Coaching",
+      "supplier": "Reidentify",
+      "ref": "Inv 9D798C42-0224",
+      "hours": 0,
+      "items": [
+        "Coaching session"
+      ],
+      "amount": 200,
+      "status": "Paid",
+      "payments": [],
+      "notes": "",
+      "invoice": "invoices/Inv-9D798C42-0224.pdf"
     }
   ],
   "bookings": [
