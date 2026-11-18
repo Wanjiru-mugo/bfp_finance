@@ -13,7 +13,7 @@
     --cream:#FCFBF5; --bistre:#322E2E; --green:#9AC634; --green-ink:#5B7F17;
     --paper:#FFFFFF; --line:#E7E4D9; --line-strong:#D3CFC2;
     --ink:#322E2E; --ink-2:#6B6560; --ink-3:#9A948C;
-    --c-production:#6E9A1E; --c-kit:#1F78A8; --c-hospitality:#C9703A; --c-other:#8A5AA6;
+    --c-production:#6E9A1E; --c-kit:#1F78A8; --c-hospitality:#C9703A; --c-design:#8A5AA6; --c-coaching:#B8860B; --c-other:#C2477A;
     --warn:#B5610F; --crit:#B3261E; --good:#3E7D1E;
     --radius:14px;
   }
@@ -131,6 +131,29 @@
   .hospbar{height:6px;background:#F3F1E9;border-radius:3px;overflow:hidden;margin-top:4px}
   .hospbar i{display:block;height:100%;background:var(--c-hospitality)}
 
+  /* Business costs */
+  .bizgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .biz .top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+  .biz .tt{display:flex;align-items:center;gap:8px;font-weight:700;font-size:15px}
+  .biz .tt i{width:12px;height:12px;border-radius:3px}
+  .biz .big{font-family:'Anton',sans-serif;font-size:44px;line-height:1;margin-top:10px}
+  .biz .sub2{font-size:13px;color:var(--ink-2);margin-top:4px}
+  .biz .spark{margin:14px 0 6px}
+  .biz .spark svg{display:block;width:100%;height:auto}
+  .biz ul{list-style:none;margin-top:8px}
+  .biz li{display:grid;grid-template-columns:76px 1fr auto;gap:10px;padding:10px 0;border-top:1px solid var(--line);font-size:14px;align-items:baseline}
+  .biz li .dd{font-size:12.5px;color:var(--ink-3);white-space:nowrap}
+  .biz li .ds{color:var(--ink)} .biz li .ds small{display:block;color:var(--ink-3);font-size:12px}
+  .biz li .am{font-weight:700;text-align:right;white-space:nowrap}
+  .biz .emp{border:1px dashed var(--line-strong);border-radius:12px;padding:18px;text-align:center;color:var(--ink-2);font-size:14px;margin-top:14px}
+  .fx{display:inline-block;font-size:11px;font-weight:700;background:#F6EBDD;color:#8A4A12;border-radius:5px;padding:1px 6px;margin-left:4px}
+  .invlink-card{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;background:var(--bistre);color:var(--cream);border-radius:var(--radius);padding:22px 24px;text-decoration:none}
+  .invlink-card h3{font-family:'Anton',sans-serif;font-weight:400;font-size:28px;line-height:1}
+  .invlink-card h3 span{color:var(--green)}
+  .invlink-card p{color:#BDB8AC;font-size:14px;margin-top:6px}
+  .invlink-card .go{background:var(--green);color:var(--bistre);font-weight:700;border-radius:10px;padding:10px 16px;white-space:nowrap}
+  @media (max-width:820px){.bizgrid{grid-template-columns:1fr}}
+
   /* Editing board */
   .edboard{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
   .edcol{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:18px;display:flex;flex-direction:column;gap:10px}
@@ -247,13 +270,14 @@
       <div class="actions">
         <button class="btn primary" id="addBookBtn">+ Add booking</button>
         <button class="btn primary" id="addHospBtn">+ Hospitality</button>
-        <button class="btn ghost-dark" id="addBtn">+ Other spend</button>
+        <button class="btn ghost-dark" id="addBtn">+ Add cost</button>
+        <a class="btn ghost-dark" href="invoices.html">Invoices</a>
         <button class="btn ghost-dark" id="exportBtn">Export data.json</button>
         <a class="btn ghost-dark" id="ghBtn" target="_blank" rel="noopener">Edit on GitHub</a>
       </div>
     </div>
     <h1><span class="br">[</span> Podcast finance <span class="br">]</span></h1>
-    <p class="sub">Every pound behind every episode: studio time, editing, kit and guest hospitality, in one place.</p>
+    <p class="sub">Every pound behind the podcast: studio time, editing, kit, guest hospitality, design and coaching, in one place.</p>
     <div class="hero-meta">
       <span class="chip"><span class="dot"></span><span id="metaRange">Loading</span></span>
       <span class="chip">GBP</span>
@@ -285,7 +309,7 @@
   <section>
     <div class="sec-head">
       <div><h2><span class="bk">[</span> Cost per recording <span class="bk">]</span></h2>
-      <p>Each bar is one recording. Hospitality stacks on top once it's logged.</p></div>
+      <p>Each bar is one recording. Faded bars are booked and paid but not yet recorded. Hospitality stacks on top once it's logged.</p></div>
     </div>
     <div class="g2">
       <div class="card">
@@ -299,6 +323,14 @@
         <div class="chart" id="monthly" style="margin-top:8px"><div class="tip"></div></div>
       </div>
     </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <div><h2><span class="bk">[</span> Design and coaching <span class="bk">]</span></h2>
+      <p>Costs that sit outside individual recordings.</p></div>
+    </div>
+    <div class="bizgrid" id="bizgrid"></div>
   </section>
 
   <section>
@@ -320,17 +352,15 @@
 
   <section>
     <div class="sec-head">
-      <div><h2><span class="bk">[</span> Invoices <span class="bk">]</span></h2>
-      <p>Download the original PDF for any line of spend.</p></div>
-      <div class="m" id="invCount" style="font-size:13px;color:var(--ink-2)"></div>
+      <div><h2><span class="bk">[</span> Invoices <span class="bk">]</span></h2></div>
     </div>
-    <div class="invgrid" id="invgrid"></div>
+    <a class="invlink-card" href="invoices.html"><div><h3><span>[</span> Invoice register <span>]</span></h3><p id="invCount">Every invoice number, amount and PDF in one table.</p></div><span class="go">Open invoices &rarr;</span></a>
   </section>
 
   <section>
     <div class="sec-head">
       <div><h2><span class="bk">[</span> Checks <span class="bk">]</span></h2>
-      <p>Flagged automatically from the data every time the page loads.</p></div>
+      <p>Flagged automatically from the data every time the page loads. <b id="chkCount"></b></p></div>
     </div>
     <div class="flags" id="flags"></div>
   </section>
@@ -355,7 +385,7 @@
       <div class="card">
         <div class="label" style="margin-bottom:10px">Option A: key it in here</div>
         <ol>
-          <li>Click <b>+ Add booking</b>, <b>+ Hospitality</b> or <b>+ Other spend</b> and fill the form. It shows on this page straight away, saved in your browser only.</li>
+          <li>Click <b>+ Add booking</b>, <b>+ Hospitality</b> or <b>+ Add cost</b> and fill the form. It shows on this page straight away, saved in your browser only.</li>
           <li>Click <b>Export data.json</b>. A file downloads with old and new entries merged.</li>
           <li>Click <b>Edit on GitHub</b>, then <b>Add file &rsaquo; Upload files</b>, drop the new <code>data.json</code> in and commit. Everyone sees it within a minute or two.</li>
         </ol>
@@ -364,9 +394,9 @@
         <div class="label" style="margin-bottom:10px">Option B: edit the data file directly</div>
         <ol>
           <li>Open <code>data.json</code> on GitHub and click the pencil icon.</li>
-          <li>Copy an existing entry block, paste it below, change the values. Category must be one of: <b>Production</b>, <b>Kit &amp; accessories</b>, <b>Hospitality</b>, <b>Other</b>.</li>
+          <li>Copy an existing entry block, paste it below, change the values. Category must be one of: <b>Production</b>, <b>Kit &amp; accessories</b>, <b>Hospitality</b>, <b>Design &amp; branding</b>, <b>Coaching</b>, <b>Other</b>.</li>
           <li>Commit. The page rebuilds itself; charts and checks update automatically.</li>
-          <li><b>Invoices:</b> open the <code>invoices</code> folder on GitHub, <b>Add file &rsaquo; Upload files</b>, and name each PDF to match its entry, e.g. <code>2026-10-30-natalie.pdf</code>. The Download button switches on automatically.</li>
+          <li><b>Invoices:</b> open the <code>invoices</code> folder on GitHub, <b>Add file &rsaquo; Upload files</b>, and name each PDF by its invoice number, e.g. <code>INV-7E846BE1.pdf</code>. The Download button switches on automatically.</li>
         </ol>
       </div>
     </div>
@@ -399,15 +429,19 @@
   <form class="entry" id="entryForm" method="dialog">
     <label>Date<input type="date" name="date" required></label>
     <label>Amount (£)<input type="number" name="amount" min="0" step="0.01" required></label>
-    <label>Guest / episode<input name="guest" list="guestList" placeholder="e.g. Natalie" required></label>
+    <label>Guest / episode<input name="guest" list="guestList" placeholder="Recordings and hospitality only"></label>
+    <input type="hidden" name="recording">
     <label>Category
       <select name="category" required>
-        <option>Hospitality</option><option>Production</option><option>Kit &amp; accessories</option><option>Other</option>
+        <option>Production</option><option>Hospitality</option><option>Kit &amp; accessories</option><option>Design &amp; branding</option><option>Coaching</option><option>Other</option>
       </select>
     </label>
     <label>Supplier<input name="supplier" placeholder="e.g. Restaurant name, studio"></label>
     <label>Invoice / receipt ref<input name="ref" placeholder="Optional"></label>
-    <label class="full">Invoice file in repo<input name="invoice" placeholder="Leave blank to auto-name, e.g. invoices/2026-11-19-asha-editing.pdf"></label>
+    <label class="full">Description<input name="description" placeholder="e.g. Coaching session 4 of 10, brand assets"></label>
+    <label>Paid in another currency?<select name="currency"><option value="">No, GBP</option><option>USD</option><option>EUR</option><option>KES</option></select></label>
+    <label>Original amount<input type="number" name="originalAmount" min="0" step="0.01" placeholder="e.g. 500"></label>
+    <label class="full">Invoice file in repo<input name="invoice" placeholder="Leave blank: named after the invoice number, e.g. invoices/INV-7E846BE1.pdf"></label>
     <div class="full"><div class="label" style="margin-bottom:6px">What it covered</div>
       <div class="checks" id="itemChecks"></div>
     </div>
@@ -429,18 +463,20 @@
     "currency": "GBP",
     "github": {
       "owner": "Wanjiru-mugo",
-      "repo": "built_for_perfromance",
+      "repo": "bfp_finance",
       "branch": "main"
     },
     "categories": [
       "Production",
       "Kit & accessories",
       "Hospitality",
+      "Design & branding",
+      "Coaching",
       "Other"
     ],
     "knownIssues": [
       "Missing invoice: advanced editing for the 15 May 2026 recording with Raynee.",
-      "Hospitality spend not yet logged for any recording."
+      "Coaching invoices not added yet."
     ],
     "editingStatuses": [
       "Paid",
@@ -484,7 +520,7 @@
       "notes": "Paid in two instalments.",
       "editing": "Paid",
       "editingNote": "Included in INV-B8438A47 (£492), paid in two instalments.",
-      "invoice": "invoices/2026-03-02-micah.pdf"
+      "invoice": "invoices/INV-B8438A47.pdf"
     },
     {
       "id": "e2",
@@ -505,7 +541,7 @@
       "notes": "Advanced editing invoice for this recording is missing.",
       "editing": "Pending",
       "editingNote": "Editing done but the invoice is missing from Notion.",
-      "invoice": "invoices/2026-05-15-raynee.pdf"
+      "invoice": "invoices/INV-2026-6653.pdf"
     },
     {
       "id": "e3",
@@ -537,7 +573,7 @@
       "notes": "Paid in two instalments.",
       "editing": "Paid",
       "editingNote": "Included in INV-8F53A0D3 (£516), paid in two instalments.",
-      "invoice": "invoices/2026-08-20-reece.pdf"
+      "invoice": "invoices/INV-8F53A0D3.pdf"
     },
     {
       "id": "e5",
@@ -558,7 +594,7 @@
       "notes": "",
       "editing": "Not invoiced",
       "editingNote": "",
-      "invoice": "invoices/2026-10-22-paul.pdf"
+      "invoice": "invoices/INV-0F441BB6.pdf"
     },
     {
       "id": "e6",
@@ -579,7 +615,7 @@
       "notes": "",
       "editing": "Not invoiced",
       "editingNote": "",
-      "invoice": "invoices/2026-10-30-natalie.pdf"
+      "invoice": "invoices/INV-1B82E605.pdf"
     },
     {
       "id": "e7",
@@ -600,7 +636,139 @@
       "notes": "Invoice INV-A0851789 was originally for Jaak's 16 Oct slot. Transferred to Asha after Jaak cancelled.",
       "editing": "Not invoiced",
       "editingNote": "",
-      "invoice": "invoices/2026-11-19-asha.pdf"
+      "invoice": "invoices/INV-A0851789.pdf"
+    },
+    {
+      "id": "e8",
+      "date": "2026-11-27",
+      "guest": "Emily",
+      "category": "Production",
+      "supplier": "Podcast Room (Hanover Square)",
+      "ref": "INV-7E846BE1",
+      "invoiceDate": "2026-11-16",
+      "hours": 1.5,
+      "items": [
+        "Studio hire + engineer",
+        "Additional camera",
+        "4K footage"
+      ],
+      "net": 180.0,
+      "vat": 36.0,
+      "amount": 216,
+      "status": "Paid",
+      "payments": [],
+      "notes": "Paid in advance on 16 Nov 2026.",
+      "invoice": "invoices/INV-7E846BE1.pdf"
+    },
+    {
+      "id": "e9",
+      "date": "2026-12-16",
+      "guest": "Peter (channel intro)",
+      "category": "Production",
+      "supplier": "Podcast Room (London Bridge)",
+      "ref": "INV-14C108A9",
+      "invoiceDate": "2026-11-16",
+      "hours": 1,
+      "items": [
+        "Studio hire + engineer",
+        "4K footage"
+      ],
+      "net": 90.0,
+      "vat": 18.0,
+      "amount": 108,
+      "status": "Paid",
+      "payments": [],
+      "notes": "Channel intro recording. Paid in advance on 16 Nov 2026.",
+      "invoice": "invoices/INV-14C108A9.pdf"
+    },
+    {
+      "id": "e10",
+      "date": "2026-12-17",
+      "guest": "Gary",
+      "category": "Production",
+      "supplier": "Podcast Room (London Bridge)",
+      "ref": "INV-399F5C60",
+      "invoiceDate": "2026-11-16",
+      "hours": 1.5,
+      "items": [
+        "Studio hire + engineer",
+        "Additional camera",
+        "4K footage"
+      ],
+      "net": 180.0,
+      "vat": 36.0,
+      "amount": 216,
+      "status": "Paid",
+      "payments": [],
+      "notes": "Paid in advance on 16 Nov 2026.",
+      "invoice": "invoices/INV-399F5C60.pdf"
+    },
+    {
+      "id": "e11",
+      "date": "2027-01-15",
+      "guest": "Natalie",
+      "category": "Production",
+      "supplier": "Podcast Room (London Bridge)",
+      "ref": "INV-BDBE2818",
+      "invoiceDate": "2026-11-16",
+      "hours": 1.5,
+      "items": [
+        "Studio hire + engineer",
+        "Additional camera",
+        "4K footage"
+      ],
+      "net": 180.0,
+      "vat": 36.0,
+      "amount": 216,
+      "status": "Paid",
+      "payments": [],
+      "notes": "Second Natalie episode. Paid in advance on 16 Nov 2026.",
+      "invoice": "invoices/INV-BDBE2818.pdf",
+      "recording": "natalie-2027-01-15"
+    },
+    {
+      "id": "e12",
+      "date": "2027-01-18",
+      "guest": "Sarah",
+      "category": "Production",
+      "supplier": "Podcast Room (London Bridge)",
+      "ref": "INV-292164FF",
+      "invoiceDate": "2026-11-16",
+      "hours": 1.5,
+      "items": [
+        "Studio hire + engineer",
+        "Additional camera",
+        "4K footage"
+      ],
+      "net": 180.0,
+      "vat": 36.0,
+      "amount": 216,
+      "status": "Paid",
+      "payments": [],
+      "notes": "Paid in advance on 16 Nov 2026.",
+      "invoice": "invoices/INV-292164FF.pdf"
+    },
+    {
+      "id": "e13",
+      "date": "2026-11-16",
+      "guest": "",
+      "category": "Design & branding",
+      "supplier": "Brand designer",
+      "ref": "",
+      "hours": 0,
+      "items": [
+        "Brand assets"
+      ],
+      "description": "Brand designer fee for the BFP brand assets",
+      "amount": 379.13,
+      "currency": "USD",
+      "originalAmount": 500,
+      "fxRate": 0.7583,
+      "fxEstimated": true,
+      "status": "Invoiced",
+      "payments": [],
+      "notes": "US$500 converted at 0.7583 (x-rates, 16 Nov 2026). Replace with the GBP amount on the bank statement.",
+      "invoice": ""
     }
   ],
   "bookings": [
@@ -627,15 +795,78 @@
       "hospitalityPlan": "",
       "hospitalityBudget": null,
       "notes": "Cancelled. Booking and invoice moved to Asha (19 Nov)."
+    },
+    {
+      "id": "b3",
+      "date": "2026-11-27",
+      "guest": "Emily",
+      "status": "Confirmed",
+      "package": "3 cams, 4K footage, 1.5h",
+      "studioCost": 216,
+      "ref": "INV-7E846BE1",
+      "hospitalityPlan": "",
+      "hospitalityBudget": null,
+      "notes": "Studio paid 16 Nov 2026. Hanover Square studio."
+    },
+    {
+      "id": "b4",
+      "date": "2026-12-16",
+      "guest": "Peter (channel intro)",
+      "status": "Confirmed",
+      "package": "4K footage, 1h",
+      "studioCost": 108,
+      "ref": "INV-14C108A9",
+      "hospitalityPlan": "",
+      "hospitalityBudget": null,
+      "notes": "Studio paid 16 Nov 2026."
+    },
+    {
+      "id": "b5",
+      "date": "2026-12-17",
+      "guest": "Gary",
+      "status": "Confirmed",
+      "package": "3 cams, 4K footage, 1.5h",
+      "studioCost": 216,
+      "ref": "INV-399F5C60",
+      "hospitalityPlan": "",
+      "hospitalityBudget": null,
+      "notes": "Studio paid 16 Nov 2026."
+    },
+    {
+      "id": "b6",
+      "date": "2027-01-15",
+      "guest": "Natalie",
+      "status": "Confirmed",
+      "package": "3 cams, 4K footage, 1.5h",
+      "studioCost": 216,
+      "ref": "INV-BDBE2818",
+      "hospitalityPlan": "",
+      "hospitalityBudget": null,
+      "notes": "Studio paid 16 Nov 2026.",
+      "recording": "natalie-2027-01-15"
+    },
+    {
+      "id": "b7",
+      "date": "2027-01-18",
+      "guest": "Sarah",
+      "status": "Confirmed",
+      "package": "3 cams, 4K footage, 1.5h",
+      "studioCost": 216,
+      "ref": "INV-292164FF",
+      "hospitalityPlan": "",
+      "hospitalityBudget": null,
+      "notes": "Studio paid 16 Nov 2026."
     }
   ]
 }
 </script>
 <script>
 (function(){
-  const CAT_COLOR={"Production":"var(--c-production)","Kit & accessories":"var(--c-kit)","Hospitality":"var(--c-hospitality)","Other":"var(--c-other)"};
-  const CATS=["Production","Kit & accessories","Hospitality","Other"];
-  const ITEM_OPTIONS=["Studio hire + engineer","Additional camera","4K footage","Advanced editing","Social media snippets","Teleprompter","Meal / drinks","Travel","Gift"];
+  const CAT_COLOR={"Production":"var(--c-production)","Kit & accessories":"var(--c-kit)","Hospitality":"var(--c-hospitality)","Design & branding":"var(--c-design)","Coaching":"var(--c-coaching)","Other":"var(--c-other)"};
+  const CATS=["Production","Kit & accessories","Hospitality","Design & branding","Coaching","Other"];
+  const REC_CATS=["Production","Kit & accessories","Hospitality"];
+  const recKey=e=>e.recording||e.guest;
+  const ITEM_OPTIONS=["Studio hire + engineer","Additional camera","4K footage","Advanced editing","Social media snippets","Teleprompter","Meal / drinks","Travel","Gift","Brand design","Coaching session"];
   const MATRIX_COLS=["Additional camera","4K footage","Advanced editing","Teleprompter","Social media snippets"];
   const LS="bfp-finance-drafts-v1", LSB="bfp-finance-bookings-v1";
   const PD=v=>{if(v instanceof Date)return v;const m=/^(\d{4})-(\d{2})(?:-(\d{2}))?$/.exec(String(v));return m?new Date(+m[1],+m[2]-1,+(m[3]||1)):new Date(v)};
@@ -660,14 +891,18 @@
   // Group spend by recording (guest)
   function recordings(rows){
     const m=new Map();
-    rows.forEach(e=>{
-      const k=e.guest||"Unassigned";
-      if(!m.has(k))m.set(k,{guest:k,date:null,byCat:{},total:0,entries:[]});
+    rows.filter(e=>e.guest&&REC_CATS.includes(e.category)).forEach(e=>{
+      const k=recKey(e);
+      if(!m.has(k))m.set(k,{key:k,guest:e.guest,date:null,byCat:{},total:0,entries:[]});
       const r=m.get(k);r.entries.push(e);r.total+=+e.amount;r.byCat[e.category]=(r.byCat[e.category]||0)+ +e.amount;
       if(e.category==="Production"&&(!r.date||e.date<r.date))r.date=e.date;
     });
     m.forEach(r=>{if(!r.date)r.date=r.entries.map(e=>e.date).sort()[0]});
-    return [...m.values()].sort((a,b)=>a.date<b.date?-1:1);
+    const out=[...m.values()].sort((a,b)=>a.date<b.date?-1:1);
+    const cnt={};out.forEach(r=>cnt[r.guest]=(cnt[r.guest]||0)+1);
+    out.forEach(r=>{r.label=cnt[r.guest]>1?`${r.guest} (${PD(r.date).toLocaleDateString("en-GB",{month:"short",year:"2-digit"})})`:r.guest;
+      r.short=r.label.replace(/\s*\(channel intro\)/i," intro").replace(/\s*\((\w{3}) \d{2}\)/," $1")});
+    return out;
   }
 
   function render(){
@@ -681,48 +916,53 @@
     $("#ghBtn").href=`https://github.com/${gh.owner}/${gh.repo}/blob/${gh.branch||"main"}/data.json`;
     const flags=checks(rows,recs);
     const crit=flags.filter(f=>f.lvl!=="info").length;
-    const avg=recs.length?total/recs.length:0;
+    const recTotal=recs.reduce((s,r)=>s+r.total,0), avg=recs.length?recTotal/recs.length:0;
+    const catSum=c=>rows.filter(e=>e.category===c).reduce((s,e)=>s+ +e.amount,0);
+    const coach=catSum("Coaching"), design=catSum("Design & branding");
     const hours=prod.reduce((s,e)=>s+(+e.hours||0),0);
     const nextB=allBookings().filter(b=>b.status!=="Cancelled"&&PD(b.date)>=TODAY).sort((a,b)=>a.date<b.date?-1:1)[0];
 
     $("#kpis").innerHTML=`
-      <div class="kpi accent"><div class="label">Total spend</div><div class="v num">${gbp(total)}</div><div class="d">${rows.length} line${rows.length===1?"":"s"} across ${recs.length} recordings</div></div>
-      <div class="kpi"><div class="label">Avg per recording</div><div class="v num">${gbp(Math.round(avg))}</div><div class="d">All categories included</div></div>
-      <div class="kpi"><div class="label">Next recording</div>${nextB?`<div class="v">${esc(nextB.guest)}</div><div class="d">${fmtD(nextB.date)} · ${esc(nextB.status)}</div>`:`<div class="v" style="color:var(--ink-3)">None</div><div class="d">Add a booking</div>`}</div>
-      <div class="kpi"><div class="label">Hospitality</div><div class="v num">${gbp(hosp)}</div>${hosp?`<div class="d">Logged for ${recs.filter(r=>r.byCat["Hospitality"]).length} of ${recs.length} recordings</div>`:`<span class="pending">Not logged yet</span>`}</div>
-      <div class="kpi"><div class="label">Items to check</div><div class="v num" style="color:${crit?"var(--crit)":"var(--good)"}">${crit}</div><div class="d">See checks below</div></div>`;
+      <div class="kpi accent"><div class="label">Total spend</div><div class="v num">${gbp(Math.round(total))}</div><div class="d">${rows.length} invoice line${rows.length===1?"":"s"}</div></div>
+      <div class="kpi"><div class="label">Recordings</div><div class="v num">${gbp(Math.round(recTotal))}</div><div class="d">${recs.length} recordings · ${gbp(Math.round(avg))} avg</div></div>
+      <div class="kpi"><div class="label">Coaching</div><div class="v num">${gbp(Math.round(coach))}</div>${coach?`<div class="d">${rows.filter(e=>e.category==="Coaching").length} invoices</div>`:`<span class="pending">Not added yet</span>`}</div>
+      <div class="kpi"><div class="label">Design & branding</div><div class="v num">${gbp(Math.round(design))}</div><div class="d">${rows.filter(e=>e.category==="Design & branding").length} line${rows.filter(e=>e.category==="Design & branding").length===1?"":"s"}${rows.some(e=>e.category==="Design & branding"&&e.fxEstimated)?" · FX estimate":""}</div></div>
+      <div class="kpi"><div class="label">Hospitality</div><div class="v num">${gbp(Math.round(hosp))}</div>${hosp?`<div class="d">Logged for ${recs.filter(r=>r.byCat["Hospitality"]).length} of ${recs.length} recordings</div>`:`<span class="pending">Not logged yet</span>`}</div>`;
+    $("#chkCount").textContent=crit?`${crit} need${crit===1?"s":""} attention.`:"";
 
     const drafts=ls.get().concat(lsb.get());
     $("#draftBanner").classList.toggle("show",drafts.length>0);
     $("#draftText").innerHTML=`<b>${drafts.length} local entr${drafts.length===1?"y":"ies"}</b> only visible in this browser. Export and upload data.json to publish.`;
 
-    $("#legend1").innerHTML=CATS.map(c=>`<span><i style="background:${CAT_COLOR[c]}"></i>${c}</span>`).join("");
+    $("#legend1").innerHTML=REC_CATS.map(c=>`<span><i style="background:${CAT_COLOR[c]}"></i>${c}</span>`).join("");
     perEpChart(recs);
     catBars(rows,total);
     monthly(rows);
     matrix(recs);
     bookingsView(rows);
     editing(recs);
-    invoices(rows);
+    bizCosts(rows);
+    invCount(rows);
     $("#flags").innerHTML=flags.map(f=>`<div class="flag ${f.lvl}"><div class="ic">${f.lvl==="crit"?"!":f.lvl==="info"?"i":"?"}</div><div><div class="t">${esc(f.t)}</div><div class="s">${esc(f.s)}</div></div></div>`).join("")||`<div class="flag info"><div class="ic">✓</div><div><div class="t">Nothing to check</div></div></div>`;
     ledger(rows,total);
-    $("#guestList").innerHTML=recs.map(r=>`<option value="${esc(r.guest)}">`).join("");
+    $("#guestList").innerHTML=[...new Set(recs.map(r=>r.guest))].map(g=>`<option value="${esc(g)}">`).join("");
   }
 
   function checks(rows,recs){
     const out=[];
     const byRef={};rows.forEach(e=>{if(e.ref){(byRef[e.ref]=byRef[e.ref]||[]).push(e)}});
     Object.entries(byRef).forEach(([ref,list])=>{if(list.length>1)out.push({lvl:"crit",t:`Invoice ref ${ref} is used ${list.length} times`,s:list.map(e=>`${e.guest} (${fmtD(e.date)})`).join(" and ")+". One of these refs is probably wrong; check against the PDFs."})});
-    rows.filter(e=>PD(e.date)>TODAY&&!allBookings().some(b=>b.status!=="Cancelled"&&b.guest===e.guest&&b.date===e.date)).forEach(e=>out.push({lvl:"warn",t:`Future-dated entry: ${e.guest}, ${fmtD(e.date)}`,s:"Either a pre-booked session or a date typo. Confirm the recording date."}));
+    rows.filter(e=>PD(e.date)>TODAY&&!allBookings().some(b=>b.status!=="Cancelled"&&(b.recording||b.guest)===recKey(e)&&b.date===e.date)).forEach(e=>out.push({lvl:"warn",t:`Future-dated entry: ${e.guest}, ${fmtD(e.date)}`,s:"Either a pre-booked session or a date typo. Confirm the recording date."}));
     rows.forEach(e=>{if(e.payments&&e.payments.length){const p=e.payments.reduce((s,x)=>s+ +x.amount,0);if(Math.abs(p-e.amount)>0.01)out.push({lvl:"crit",t:`Payments don't match invoice for ${e.guest}`,s:`Invoice ${gbp(e.amount)}, payments total ${gbp(p)}.`});}});
     const pk={};rows.filter(e=>e.category==="Production").forEach(e=>{const k=(e.items||[]).slice().sort().join("|")+"@"+e.hours;(pk[k]=pk[k]||[]).push(e)});
     Object.values(pk).forEach(list=>{const prices=[...new Set(list.map(e=>+e.amount))];if(prices.length>1){const lo=Math.min(...prices),hi=Math.max(...prices);const cheap=list.filter(e=>+e.amount===lo).map(e=>e.guest);out.push({lvl:"warn",t:`Same package, different price: ${gbp(lo)} vs ${gbp(hi)}`,s:`${list[0].hours}h with ${list[0].items.slice(1).join(", ").toLowerCase()}. ${cheap.join(", ")} paid ${gbp(lo)}; later sessions ${gbp(hi)} (+${Math.round((hi-lo)/lo*100)}%). Rate rise or missing line?`})}});
-    const noH=recs.filter(r=>!r.byCat["Hospitality"]&&PD(r.date)<=TODAY).map(r=>r.guest);
+    const noH=recs.filter(r=>!r.byCat["Hospitality"]&&PD(r.date)<=TODAY).map(r=>r.label);
     if(noH.length)out.push({lvl:"info",t:`Hospitality not logged for ${noH.length} recording${noH.length>1?"s":""}`,s:noH.join(", ")+". Add Peter's guest spend to complete the true cost per episode."});
-    allBookings().filter(b=>b.status!=="Cancelled"&&+b.hospitalityBudget>0).forEach(b=>{const sp=rows.filter(e=>e.guest===b.guest&&e.category==="Hospitality").reduce((s,e)=>s+ +e.amount,0);if(sp>b.hospitalityBudget)out.push({lvl:"warn",t:`Hospitality over budget for ${b.guest}`,s:`Spent ${gbp(sp)} against a ${gbp(b.hospitalityBudget)} budget.`})});
+    allBookings().filter(b=>b.status!=="Cancelled"&&+b.hospitalityBudget>0).forEach(b=>{const sp=rows.filter(e=>recKey(e)===(b.recording||b.guest)&&e.category==="Hospitality").reduce((s,e)=>s+ +e.amount,0);if(sp>b.hospitalityBudget)out.push({lvl:"warn",t:`Hospitality over budget for ${b.guest}`,s:`Spent ${gbp(sp)} against a ${gbp(b.hospitalityBudget)} budget.`})});
+    rows.filter(e=>e.fxEstimated).forEach(e=>out.push({lvl:"warn",t:`Currency estimate: ${e.supplier}, ${e.currency} ${e.originalAmount}`,s:`Shown as ${gbp(e.amount)} at ${e.fxRate}. Confirm the payment date and status, then replace "amount" with the GBP figure from the bank statement and set "fxEstimated" to false.`}));
     const unpaid=rows.filter(e=>e.status==="Unpaid");
-    if(unpaid.length)out.push({lvl:"warn",t:`Awaiting payment: ${gbp(unpaid.reduce((a,e)=>a+ +e.amount,0))} across ${unpaid.length} invoice${unpaid.length>1?"s":""}`,s:unpaid.map(e=>`${e.guest} (${(e.items||[]).join(", ")||e.category}, ${gbp(e.amount)})`).join("; ")+". Change status to Paid in data.json once paid."});
-    (DATA.meta.knownIssues||[]).filter(s=>!/hospitality/i.test(s)).forEach(s=>out.push({lvl:"warn",t:s,s:"Logged manually in data.json."}));
+    if(unpaid.length)out.push({lvl:"warn",t:`Awaiting payment: ${gbp(unpaid.reduce((a,e)=>a+ +e.amount,0))} across ${unpaid.length} invoice${unpaid.length>1?"s":""}`,s:unpaid.map(e=>`${e.guest||e.supplier} (${(e.items||[]).join(", ")||e.category}, ${gbp(e.amount)})`).join("; ")+". Change status to Paid in data.json once paid."});
+    (DATA.meta.knownIssues||[]).filter(s=>!/hospitality/i.test(s)&&!(/coaching/i.test(s)&&rows.some(e=>e.category==="Coaching"))).forEach(s=>out.push({lvl:"warn",t:s,s:"Logged manually in data.json."}));
     rows.filter(e=>e.payments&&e.payments.length>1).forEach(e=>out.push({lvl:"info",t:`Split payment: ${e.guest}`,s:e.payments.map(p=>`${gbp(p.amount)} on ${fmtD(p.date)}`).join(" + ")+` = ${gbp(e.amount)}.`}));
     return out;
   }
@@ -737,7 +977,7 @@
   function niceMax(v){if(v<=0)return 100;const p=Math.pow(10,Math.floor(Math.log10(v)));const n=v/p;return (n<=1?1:n<=2?2:n<=2.5?2.5:n<=5?5:10)*p}
 
   function perEpChart(recs){
-    const box=$("#perEp");const W=Math.max(box.clientWidth||720,300),narrow=W/Math.max(recs.length,1)<70,H=narrow?260:320,m={t:22,r:4,b:narrow?30:48,l:40};
+    const box=$("#perEp");const W=Math.max(box.clientWidth||720,300),narrow=W/Math.max(recs.length,1)<56,H=narrow?260:320,m={t:22,r:4,b:narrow?30:48,l:40};
     const iw=W-m.l-m.r,ih=H-m.t-m.b;const max=niceMax(Math.max(...recs.map(r=>r.total),1)*1.08);
     const bw=Math.min(56,iw/recs.length*0.62),step=iw/Math.max(recs.length,1);
     const y=v=>m.t+ih-v/max*ih;
@@ -745,8 +985,8 @@
     let ax=`<g class="axis">`;for(let i=0;i<=4;i++){const v=max/4*i;ax+=`<text x="${m.l-8}" y="${y(v)+4}" text-anchor="end">£${v}</text>`}ax+="</g>";
     let bars="",labels="",hits="";
     recs.forEach((r,i)=>{
-      const cx=m.l+step*i+step/2;let acc=0;
-      const segs=CATS.filter(c=>r.byCat[c]);
+      const cx=m.l+step*i+step/2;let acc=0;const fut=PD(r.date)>TODAY;bars+=fut?`<g opacity=".45">`:"";
+      const segs=REC_CATS.filter(c=>r.byCat[c]);
       segs.forEach((c,j)=>{
         const v=r.byCat[c],y0=y(acc),y1=y(acc+v),h=Math.max(0,y0-y1-(j>0?2:0));
         const top=j===segs.length-1;const x=cx-bw/2,yy=y1+(j>0?0:0);
@@ -754,16 +994,17 @@
                  :`<rect x="${x}" y="${yy}" width="${bw}" height="${h}" fill="${CAT_COLOR[c]}"/>`;
         acc+=v;
       });
+      if(fut)bars+="</g>";
       labels+=`<text class="lbl num" style="font-size:${narrow?10:12}px" x="${cx}" y="${y(r.total)-7}" text-anchor="middle">${gbp(r.total)}</text>`;
-      labels+=`<text class="xl" style="font-size:${narrow?10:12}px" x="${cx}" y="${H-m.b+18}" text-anchor="middle">${esc(r.guest)}</text>`+(narrow?"":`<text class="xs" x="${cx}" y="${H-m.b+33}" text-anchor="middle">${PD(r.date)>TODAY?"Upcoming":PD(r.date).toLocaleDateString("en-GB",{day:"numeric",month:"short"})}</text>`);
+      labels+=`<text class="xl" style="font-size:${narrow?10:11}px" x="${cx}" y="${H-m.b+18}" text-anchor="middle">${esc(r.short)}</text>`+(narrow?"":`<text class="xs" x="${cx}" y="${H-m.b+33}" text-anchor="middle">${PD(r.date).toLocaleDateString("en-GB",{day:"numeric",month:"short"})}</text>`);
       hits+=`<rect class="hit" data-i="${i}" x="${m.l+step*i}" y="${m.t}" width="${step}" height="${ih}"/>`;
     });
     box.innerHTML=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Cost per recording">${g}${ax}<line x1="${m.l}" x2="${W-m.r}" y1="${y(0)}" y2="${y(0)}" stroke="var(--line-strong)"/>${bars}${labels}${hits}</svg><div class="tip"></div>`;
     box.querySelectorAll(".hit").forEach(h=>{
       h.addEventListener("mousemove",ev=>{const r=recs[+h.dataset.i];const rect=box.getBoundingClientRect();
         const items=[...new Set(r.entries.flatMap(e=>e.items||[]))];
-        tipAt(box,`<b>${esc(r.guest)}</b><div style="font-size:12px;color:#BDB8AC;margin-bottom:6px">${fmtD(r.date)}</div>`+
-          CATS.map(c=>`<div class="r"><span><i style="background:${CAT_COLOR[c]}"></i>${c}</span><span class="num">${r.byCat[c]?gbp(r.byCat[c]):"–"}</span></div>`).join("")+
+        tipAt(box,`<b>${esc(r.label)}</b><div style="font-size:12px;color:#BDB8AC;margin-bottom:6px">${fmtD(r.date)}</div>`+
+          REC_CATS.map(c=>`<div class="r"><span><i style="background:${CAT_COLOR[c]}"></i>${c}</span><span class="num">${r.byCat[c]?gbp(r.byCat[c]):"–"}</span></div>`).join("")+
           `<div class="r" style="margin-top:6px;border-top:1px solid rgba(255,255,255,.15);padding-top:6px;color:#fff"><span>Total</span><span class="num">${gbp(r.total)}</span></div>`+
           (items.length?`<div style="margin-top:6px;font-size:12px;color:#BDB8AC">${esc(items.join(" · "))}</div>`:""),
           ev.clientX-rect.left,ev.clientY-rect.top)});
@@ -816,43 +1057,55 @@
     await Promise.all(todo.map(f=>fetch(encodeURI(f),{method:"HEAD",cache:"no-store"}).then(r=>INV[f]=r.ok).catch(()=>INV[f]=false)));
     render();
   }
-  function invoices(rows){
-    const list=rows.filter(e=>e.invoice).sort((a,b)=>a.date<b.date?1:-1);
-    const up=list.filter(e=>invState(e)===true).length, known=list.some(e=>invState(e)!==undefined);
-    $("#invCount").textContent=known?`${up} of ${list.length} uploaded`:`${list.length} invoices`;
-    $("#invgrid").innerHTML=list.map(e=>{const miss=invState(e)===false;
-      return `<div class="inv ${miss?"missing":""}"><div class="doc">PDF</div><div><div class="g">${esc(e.guest)}</div><div class="m">${fmtD(e.date)} · ${esc(e.category)}</div><div class="m" style="font-size:12px">${esc(e.ref||"No ref")}</div>
-      <div class="a"><b class="num">${gbp(e.amount)}</b>${miss?`<span class="dl off">Not uploaded</span>`:`<a class="dl" href="${encodeURI(e.invoice)}" download target="_blank" rel="noopener">${DL_ICON}Download</a>`}</div></div></div>`}).join("");
+  function invCount(rows){
+    const list=rows.filter(e=>e.ref||e.invoice);
+    $("#invCount").textContent=`${list.length} invoices · ${gbp(Math.round(list.reduce((s,e)=>s+ +e.amount,0)))}. Every invoice number, amount and PDF in one table.`;
     probeInvoices(rows);
+  }
+
+  function bizCosts(rows){
+    const card=(cat,empty)=>{
+      const list=rows.filter(e=>e.category===cat).sort((a,b)=>a.date<b.date?1:-1);
+      const tot=list.reduce((s,e)=>s+ +e.amount,0);
+      const m={};list.forEach(e=>{const k=e.date.slice(0,7);m[k]=(m[k]||0)+ +e.amount});
+      let spark="";const ks=Object.keys(m).sort();
+      if(ks.length>1){const [y0,m0]=ks[0].split("-").map(Number),[y1,m1]=ks[ks.length-1].split("-").map(Number);const mo=[];for(let y=y0,q=m0;y<y1||(y===y1&&q<=m1);q++){if(q>12){q=1;y++}mo.push(`${y}-${String(q).padStart(2,"0")}`)}
+        const W=400,H=64,mx=Math.max(...Object.values(m)),st=W/mo.length,bw=Math.max(4,st-4);
+        spark=`<div class="spark"><svg viewBox="0 0 ${W} ${H+14}">`+mo.map((k,i)=>{const v=m[k]||0,h=v/mx*H;return (v?`<rect x="${i*st+(st-bw)/2}" y="${H-h}" width="${bw}" height="${h}" rx="3" fill="${CAT_COLOR[cat]}"><title>${PD(k).toLocaleDateString("en-GB",{month:"short",year:"numeric"})}: ${gbp(v)}</title></rect>`:"")+`<text x="${i*st+st/2}" y="${H+12}" text-anchor="middle" style="font:10px 'Inter Tight';fill:var(--ink-3)">${PD(k).toLocaleDateString("en-GB",{month:"narrow"})}</text>`}).join("")+`</svg></div>`}
+      return `<div class="card biz"><div class="top"><span class="tt"><i style="background:${CAT_COLOR[cat]}"></i>${cat}</span><button class="btn" data-addcat="${cat}">+ Add</button></div>
+        <div class="big num">${gbp(Math.round(tot*100)/100)}</div><div class="sub2">${list.length} line${list.length===1?"":"s"}${ks.length?` · ${PD(ks[0]).toLocaleDateString("en-GB",{month:"short",year:"numeric"})}${ks.length>1?" to "+PD(ks[ks.length-1]).toLocaleDateString("en-GB",{month:"short",year:"numeric"}):""}`:""}</div>${spark}
+        ${list.length?`<ul>${list.map(e=>`<li><span class="dd">${PD(e.date).toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"2-digit"})}</span><span class="ds">${esc(e.description||(e.items||[]).join(", ")||e.supplier)}<small>${esc(e.supplier)}${e.ref?" · "+esc(e.ref):""} · ${esc(e.status)}${e.invoice?` · ${invLink(e)}`:""}</small></span><span class="am num">${gbp(e.amount)}${e.currency?`<div class="fx">${esc(e.currency)} ${esc(e.originalAmount)}${e.fxEstimated?" est.":""}</div>`:""}</span></li>`).join("")}</ul>`:`<div class="emp">${empty}</div>`}</div>`};
+    $("#bizgrid").innerHTML=card("Design & branding","No design costs logged yet.")+card("Coaching","No coaching invoices yet. Click <b>+ Add</b> or add them to data.json.");
+    document.querySelectorAll("[data-addcat]").forEach(x=>x.onclick=()=>openSpend(x.dataset.addcat));
   }
 
   function bookingsView(rows){
     const bs=allBookings();
     const up=bs.filter(b=>b.status!=="Cancelled"&&PD(b.date)>=TODAY).sort((a,b)=>a.date<b.date?-1:1);
     const other=bs.filter(b=>!up.includes(b)).sort((a,b)=>a.date<b.date?1:-1);
-    const hs=g=>rows.filter(e=>e.guest===g&&e.category==="Hospitality").reduce((s,e)=>s+ +e.amount,0);
+    const hs=k=>rows.filter(e=>recKey(e)===k&&e.category==="Hospitality").reduce((s,e)=>s+ +e.amount,0);
     const days=d=>Math.round((PD(d)-TODAY)/864e5);
-    $("#bookgrid").innerHTML=up.map(b=>{const dt=PD(b.date),sp=hs(b.guest),bud=+b.hospitalityBudget||0,dd=days(b.date);
+    $("#bookgrid").innerHTML=up.map(b=>{const dt=PD(b.date),sp=hs(b.recording||b.guest),bud=+b.hospitalityBudget||0,dd=days(b.date);
       return `<div class="book"><div class="dt"><div class="d">${dt.getDate()}</div><div class="mo">${dt.toLocaleDateString("en-GB",{month:"short"})}</div><div class="in">${dd===0?"Today":`in ${dd}d`}</div></div>
       <div><div><span class="gn">${esc(b.guest)}</span><span class="bs ${esc(b.status)}">${esc(b.status)}</span>${b._draft?`<span class="st Draft" style="margin-left:6px">Local</span>`:""}</div>
       <div class="kv"><span>Studio</span><span>${esc(b.package||"Not set")}</span><span>Est. cost</span><span class="num">${b.studioCost?gbp(b.studioCost):"Not set"}${b.ref?` · ${esc(b.ref)}`:""}</span>
       <span>Hospitality</span><span>${esc(b.hospitalityPlan||"Not planned yet")}</span>
       <span>Budget</span><span class="num">${bud?`${gbp(sp)} of ${gbp(bud)} spent<div class="hospbar"><i style="width:${Math.min(100,sp/bud*100)}%"></i></div>`:(sp?`${gbp(sp)} spent, no budget set`:"No budget set")}</span></div>
       ${b.notes?`<div class="nt">${esc(b.notes)}</div>`:""}
-      <div class="ba"><button class="btn" data-hosp="${esc(b.guest)}" data-date="${esc(b.date)}">+ Log hospitality</button>${b._draft?`<button class="rowx" data-rmb="${esc(b.id)}">Remove</button>`:""}</div></div></div>`}).join("")||`<div class="bempty">No upcoming bookings. Click <b>+ Add booking</b> to add one.</div>`;
+      <div class="ba"><button class="btn" data-hosp="${esc(b.guest)}" data-rec="${esc(b.recording||"")}" data-date="${esc(b.date)}">+ Log hospitality</button>${b._draft?`<button class="rowx" data-rmb="${esc(b.id)}">Remove</button>`:""}</div></div></div>`}).join("")||`<div class="bempty">No upcoming bookings. Click <b>+ Add booking</b> to add one.</div>`;
     $("#bpast").innerHTML=other.length?`<summary>Past and cancelled bookings (${other.length})</summary><ul>${other.map(b=>`<li><b>${esc(b.guest)}</b> · ${fmtD(b.date)} <span class="bs ${esc(b.status)}">${esc(b.status)}</span>${b.notes?`<div style="font-size:12.5px;color:var(--ink-3)">${esc(b.notes)}</div>`:""}${b._draft?` <button class="rowx" data-rmb="${esc(b.id)}">Remove</button>`:""}</li>`).join("")}</ul>`:"";
     $("#bpast").style.display=other.length?"":"none";
-    document.querySelectorAll("[data-hosp]").forEach(x=>x.onclick=()=>openSpend("Hospitality",x.dataset.hosp,x.dataset.date));
+    document.querySelectorAll("[data-hosp]").forEach(x=>x.onclick=()=>openSpend("Hospitality",x.dataset.hosp,x.dataset.date,x.dataset.rec));
     document.querySelectorAll("[data-rmb]").forEach(x=>x.onclick=()=>{lsb.set(lsb.get().filter(b=>b.id!==x.dataset.rmb));render()});
   }
 
   function editing(recs){
     const groups={"Paid":[],"Pending":[],"Not invoiced":[]};
-    recs.forEach(r=>{const s=edStatus(r);if(groups[s])groups[s].push(r)});
+    recs.filter(r=>PD(r.date)<=TODAY).forEach(r=>{const s=edStatus(r);if(groups[s])groups[s].push(r)});
     const note=r=>r.entries.map(e=>e.editingNote).filter(Boolean).join(" ");
     const sd=r=>PD(r.date).toLocaleDateString("en-GB",{day:"numeric",month:"short"});
     const col=(key,cls,title,empty)=>`<div class="edcol ${cls}"><div class="hd"><span class="k"><i></i>${title}</span><span class="c num">${groups[key].length}</span></div>`+
-      (groups[key].map(r=>`<div class="eg"><b>${esc(r.guest)}</b><span>${sd(r)}</span></div>${note(r)?`<div class="en">${esc(note(r))}</div>`:""}`).join("")||`<div class="en" style="margin:0">${empty}</div>`)+`</div>`;
+      (groups[key].map(r=>`<div class="eg"><b>${esc(r.label)}</b><span>${sd(r)}</span></div>${note(r)?`<div class="en">${esc(note(r))}</div>`:""}`).join("")||`<div class="en" style="margin:0">${empty}</div>`)+`</div>`;
     $("#edboard").innerHTML=col("Paid","paid","Paid","None yet")+col("Pending","pend","Pending: invoice missing","Nothing pending")+col("Not invoiced","none","No editing invoiced","All covered");
     const n=groups["Not invoiced"].length;
     $("#edq").textContent=n?`If any of the ${n} "no editing invoiced" recordings did go through advanced editing, mark them Pending in data.json so they're chased.`:"";
@@ -862,7 +1115,7 @@
     const head=`<thead><tr><th>Recording</th><th>Date</th><th>Hours</th>${MATRIX_COLS.map(c=>`<th>${c.replace("Social media snippets","Snippets").replace("Additional camera","Extra camera").replace("Advanced editing","Adv. editing")}</th>`).join("")}<th>Hospitality</th><th style="text-align:right">Total</th></tr></thead>`;
     const body=recs.map(r=>{const items=new Set(r.entries.flatMap(e=>e.items||[]));const hrs=r.entries.reduce((s,e)=>s+(+e.hours||0),0);
       const missingEdit=edStatus(r)==="Pending";
-      return `<tr><td class="g">${esc(r.guest)}</td><td>${PD(r.date).toLocaleDateString("en-GB",{day:"numeric",month:"short"})}</td><td class="num">${hrs||"–"}</td>${MATRIX_COLS.map(c=>`<td>${items.has(c)?`<span class="tick" title="${c}"></span>`:(c==="Advanced editing"&&missingEdit?`<span class="q" title="Invoice missing">Missing inv.</span>`:`<span class="nil"></span>`)}</td>`).join("")}<td>${r.byCat["Hospitality"]?gbp(r.byCat["Hospitality"]):`<span class="q">Not logged</span>`}</td><td class="num" style="text-align:right;font-weight:700">${gbp(r.total)}</td></tr>`}).join("");
+      return `<tr><td class="g">${esc(r.label)}</td><td>${PD(r.date).toLocaleDateString("en-GB",{day:"numeric",month:"short"})}</td><td class="num">${hrs||"–"}</td>${MATRIX_COLS.map(c=>`<td>${items.has(c)?`<span class="tick" title="${c}"></span>`:(c==="Advanced editing"&&missingEdit?`<span class="q" title="Invoice missing">Missing inv.</span>`:`<span class="nil"></span>`)}</td>`).join("")}<td>${r.byCat["Hospitality"]?gbp(r.byCat["Hospitality"]):`<span class="q">Not logged</span>`}</td><td class="num" style="text-align:right;font-weight:700">${gbp(r.total)}</td></tr>`}).join("");
     $("#matrix").innerHTML=head+`<tbody>${body}</tbody>`;
   }
 
@@ -870,12 +1123,12 @@
     $("#catFilter").innerHTML=["All",...CATS].map(c=>`<button class="${state.cat===c?"on":""}" data-c="${c}">${c}</button>`).join("");
     $("#catFilter").querySelectorAll("button").forEach(b=>b.onclick=()=>{state.cat=b.dataset.c;ledger(all())});
     const q=state.q.toLowerCase();
-    let list=rows.filter(e=>(state.cat==="All"||e.category===state.cat)&&(!q||[e.guest,e.supplier,e.ref,(e.items||[]).join(" "),e.notes].join(" ").toLowerCase().includes(q)));
+    let list=rows.filter(e=>(state.cat==="All"||e.category===state.cat)&&(!q||[e.guest,e.supplier,e.ref,e.description,(e.items||[]).join(" "),e.notes].join(" ").toLowerCase().includes(q)));
     const k=state.sort;list.sort((a,b)=>{const A=k==="amount"?+a[k]:String(a[k]||""),B=k==="amount"?+b[k]:String(b[k]||"");return (A>B?1:A<B?-1:0)*state.dir});
     const sub=list.reduce((s,e)=>s+ +e.amount,0);
     const th=(key,lab,cls="")=>`<th class="${cls}" data-k="${key}">${lab}${state.sort===key?(state.dir>0?" ↑":" ↓"):""}</th>`;
     $("#ledger").innerHTML=`<thead><tr>${th("date","Date")}${th("guest","Recording")}${th("category","Category")}<th>What it covered</th>${th("supplier","Supplier")}${th("ref","Ref")}${th("status","Status")}${th("amount","Amount","r")}</tr></thead><tbody>`+
-      list.map(e=>`<tr><td class="num" style="white-space:nowrap">${fmtD(e.date)}</td><td><b>${esc(e.guest)}</b>${e._draft?` <span class="st Draft">Local</span>`:""}</td><td><span class="pill"><i style="background:${CAT_COLOR[e.category]||"#999"}"></i>${esc(e.category)}</span></td><td class="items">${esc((e.items||[]).join(", "))}${e.notes?`<div style="color:var(--ink-3);font-size:12px;margin-top:2px">${esc(e.notes)}</div>`:""}${e._draft?`<div><button class="rowx" data-id="${e.id}">Remove</button></div>`:""}</td><td>${esc(e.supplier)}</td><td style="font-size:12.5px;white-space:nowrap">${esc(e.ref)}${e.invoice?`<div>${invLink(e)}</div>`:""}</td><td><span class="st ${esc(e.status)}">${esc(e.status)}</span></td><td class="r num"><b>${gbp(e.amount)}</b></td></tr>`).join("")+
+      list.map(e=>`<tr><td class="num" style="white-space:nowrap">${fmtD(e.date)}</td><td><b>${esc(e.guest||"–")}</b>${e._draft?` <span class="st Draft">Local</span>`:""}</td><td><span class="pill"><i style="background:${CAT_COLOR[e.category]||"#999"}"></i>${esc(e.category)}</span></td><td class="items">${e.description?`<div style="color:var(--ink)">${esc(e.description)}</div>`:""}${esc((e.items||[]).join(", "))}${e.notes?`<div style="color:var(--ink-3);font-size:12px;margin-top:2px">${esc(e.notes)}</div>`:""}${e._draft?`<div><button class="rowx" data-id="${e.id}">Remove</button></div>`:""}</td><td>${esc(e.supplier)}</td><td style="font-size:12.5px;white-space:nowrap">${esc(e.ref)}${e.invoice?`<div>${invLink(e)}</div>`:""}</td><td><span class="st ${esc(e.status)}">${esc(e.status)}</span></td><td class="r num"><b>${gbp(e.amount)}</b>${e.currency?`<div class="fx">${esc(e.currency)} ${esc(e.originalAmount)}${e.fxEstimated?" est.":""}</div>`:""}</td></tr>`).join("")+
       `</tbody><tfoot><tr><td colspan="7">${list.length} line${list.length===1?"":"s"}${state.cat!=="All"||q?" (filtered)":""}</td><td class="r num">${gbp(sub)}</td></tr></tfoot>`;
     $("#ledger").querySelectorAll("th[data-k]").forEach(t=>t.onclick=()=>{const kk=t.dataset.k;state.dir=state.sort===kk?-state.dir:1;state.sort=kk;ledger(all())});
     $("#ledger").querySelectorAll(".rowx").forEach(b=>b.onclick=()=>{ls.set(ls.get().filter(e=>e.id!==b.dataset.id));render()});
@@ -883,8 +1136,8 @@
 
   // FORM
   $("#itemChecks").innerHTML=ITEM_OPTIONS.map(o=>`<label><input type="checkbox" name="items" value="${o}">${o}</label>`).join("");
-  function openSpend(cat,guest,date){const f=$("#entryForm");f.reset();f.date.value=date||(()=>{const n=new Date();return n.getFullYear()+"-"+String(n.getMonth()+1).padStart(2,"0")+"-"+String(n.getDate()).padStart(2,"0")})();f.category.value=cat;if(guest)f.guest.value=guest;
-    $("#dlgTitle").textContent=cat==="Hospitality"?"Log hospitality":"Add spend";
+  function openSpend(cat,guest,date,rec){const f=$("#entryForm");f.reset();f.date.value=date||(()=>{const n=new Date();return n.getFullYear()+"-"+String(n.getMonth()+1).padStart(2,"0")+"-"+String(n.getDate()).padStart(2,"0")})();f.category.value=cat;if(guest)f.guest.value=guest;f.recording.value=rec||"";
+    $("#dlgTitle").textContent=cat==="Hospitality"?"Log hospitality":cat==="Coaching"?"Add coaching cost":cat==="Design & branding"?"Add design cost":"Add cost";
     if(cat==="Hospitality"){const c=f.querySelector('input[value="Meal / drinks"]');if(c)c.checked=true;f.status.value="Paid"}
     $("#dlg").showModal()}
   $("#addBtn").onclick=()=>openSpend("Production");
@@ -901,10 +1154,13 @@
   $("#entryForm").addEventListener("submit",ev=>{
     if(ev.submitter&&ev.submitter.value!=="save"){return}
     const f=ev.target,fd=new FormData(f);
-    const e={id:"d"+Date.now(),date:fd.get("date"),guest:fd.get("guest").trim(),category:fd.get("category"),supplier:fd.get("supplier").trim(),ref:fd.get("ref").trim(),
-      hours:fd.get("hours")?+fd.get("hours"):0,items:fd.getAll("items"),amount:+fd.get("amount"),status:fd.get("status"),payments:[],notes:fd.get("notes").trim(),editing:fd.get("editing")||(fd.getAll("items").includes("Advanced editing")?(fd.get("status")==="Paid"?"Paid":"Pending"):undefined),invoice:fd.get("invoice").trim()||(()=>{const it=fd.getAll("items"),slug=fd.get("guest").trim().toLowerCase().replace(/[^a-z0-9]+/g,"-");
-      const tag=fd.get("category")==="Hospitality"?"hospitality":it.includes("Studio hire + engineer")?"studio":it.includes("Advanced editing")?"editing":fd.get("category")==="Kit & accessories"?"kit":"other";
-      return `invoices/${fd.get("date")}-${slug}-${tag}.pdf`})()};
+    const it=fd.getAll("items"),slug=(fd.get("guest").trim()||fd.get("supplier").trim()||fd.get("category")).toLowerCase().replace(/[^a-z0-9]+/g,"-"),ref=fd.get("ref").trim();
+    const e={id:"d"+Date.now(),date:fd.get("date"),guest:fd.get("guest").trim(),category:fd.get("category"),supplier:fd.get("supplier").trim(),ref,
+      hours:fd.get("hours")?+fd.get("hours"):0,items:it,amount:+fd.get("amount"),status:fd.get("status"),payments:[],notes:fd.get("notes").trim(),
+      description:fd.get("description").trim()||undefined,recording:fd.get("recording")||undefined,
+      currency:fd.get("currency")||undefined,originalAmount:fd.get("currency")&&fd.get("originalAmount")?+fd.get("originalAmount"):undefined,
+      editing:fd.get("editing")||(it.includes("Advanced editing")?(fd.get("status")==="Paid"?"Paid":"Pending"):undefined),
+      invoice:fd.get("invoice").trim()||(ref?`invoices/${ref.replace(/[^A-Za-z0-9_-]+/g,"-")}.pdf`:`invoices/${fd.get("date")}-${slug}.pdf`)};
     const d=ls.get();d.push(e);ls.set(d);render();
   });
   function exportJSON(){

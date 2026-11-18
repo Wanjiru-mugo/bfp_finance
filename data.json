@@ -3,19 +3,21 @@
     "title": "BFP podcast finance",
     "currency": "GBP",
     "github": {
-      "owner": "YOUR-GITHUB-USERNAME",
-      "repo": "bfp-finance",
+      "owner": "Wanjiru-mugo",
+      "repo": "bfp_finance",
       "branch": "main"
     },
     "categories": [
       "Production",
       "Kit & accessories",
       "Hospitality",
+      "Design & branding",
+      "Coaching",
       "Other"
     ],
     "knownIssues": [
       "Missing invoice: advanced editing for the 15 May 2026 recording with Raynee.",
-      "Hospitality spend not yet logged for any recording."
+      "Coaching invoices not added yet."
     ],
     "editingStatuses": [
       "Paid",
@@ -59,7 +61,7 @@
       "notes": "Paid in two instalments.",
       "editing": "Paid",
       "editingNote": "Included in INV-B8438A47 (£492), paid in two instalments.",
-      "invoice": "invoices/2026-03-02-micah.pdf"
+      "invoice": "invoices/INV-B8438A47.pdf"
     },
     {
       "id": "e2",
@@ -80,7 +82,7 @@
       "notes": "Advanced editing invoice for this recording is missing.",
       "editing": "Pending",
       "editingNote": "Editing done but the invoice is missing from Notion.",
-      "invoice": "invoices/2026-05-15-raynee.pdf"
+      "invoice": "invoices/INV-2026-6653.pdf"
     },
     {
       "id": "e3",
@@ -112,7 +114,7 @@
       "notes": "Paid in two instalments.",
       "editing": "Paid",
       "editingNote": "Included in INV-8F53A0D3 (£516), paid in two instalments.",
-      "invoice": "invoices/2026-08-20-reece.pdf"
+      "invoice": "invoices/INV-8F53A0D3.pdf"
     },
     {
       "id": "e5",
@@ -133,7 +135,7 @@
       "notes": "",
       "editing": "Not invoiced",
       "editingNote": "",
-      "invoice": "invoices/2026-10-22-paul.pdf"
+      "invoice": "invoices/INV-0F441BB6.pdf"
     },
     {
       "id": "e6",
@@ -154,7 +156,7 @@
       "notes": "",
       "editing": "Not invoiced",
       "editingNote": "",
-      "invoice": "invoices/2026-10-30-natalie.pdf"
+      "invoice": "invoices/INV-1B82E605.pdf"
     },
     {
       "id": "e7",
@@ -175,7 +177,139 @@
       "notes": "Invoice INV-A0851789 was originally for Jaak's 16 Oct slot. Transferred to Asha after Jaak cancelled.",
       "editing": "Not invoiced",
       "editingNote": "",
-      "invoice": "invoices/2026-11-19-asha.pdf"
+      "invoice": "invoices/INV-A0851789.pdf"
+    },
+    {
+      "id": "e8",
+      "date": "2026-11-27",
+      "guest": "Emily",
+      "category": "Production",
+      "supplier": "Podcast Room (Hanover Square)",
+      "ref": "INV-7E846BE1",
+      "invoiceDate": "2026-11-16",
+      "hours": 1.5,
+      "items": [
+        "Studio hire + engineer",
+        "Additional camera",
+        "4K footage"
+      ],
+      "net": 180.0,
+      "vat": 36.0,
+      "amount": 216,
+      "status": "Paid",
+      "payments": [],
+      "notes": "Paid in advance on 16 Nov 2026.",
+      "invoice": "invoices/INV-7E846BE1.pdf"
+    },
+    {
+      "id": "e9",
+      "date": "2026-12-16",
+      "guest": "Peter (channel intro)",
+      "category": "Production",
+      "supplier": "Podcast Room (London Bridge)",
+      "ref": "INV-14C108A9",
+      "invoiceDate": "2026-11-16",
+      "hours": 1,
+      "items": [
+        "Studio hire + engineer",
+        "4K footage"
+      ],
+      "net": 90.0,
+      "vat": 18.0,
+      "amount": 108,
+      "status": "Paid",
+      "payments": [],
+      "notes": "Channel intro recording. Paid in advance on 16 Nov 2026.",
+      "invoice": "invoices/INV-14C108A9.pdf"
+    },
+    {
+      "id": "e10",
+      "date": "2026-12-17",
+      "guest": "Gary",
+      "category": "Production",
+      "supplier": "Podcast Room (London Bridge)",
+      "ref": "INV-399F5C60",
+      "invoiceDate": "2026-11-16",
+      "hours": 1.5,
+      "items": [
+        "Studio hire + engineer",
+        "Additional camera",
+        "4K footage"
+      ],
+      "net": 180.0,
+      "vat": 36.0,
+      "amount": 216,
+      "status": "Paid",
+      "payments": [],
+      "notes": "Paid in advance on 16 Nov 2026.",
+      "invoice": "invoices/INV-399F5C60.pdf"
+    },
+    {
+      "id": "e11",
+      "date": "2027-01-15",
+      "guest": "Natalie",
+      "category": "Production",
+      "supplier": "Podcast Room (London Bridge)",
+      "ref": "INV-BDBE2818",
+      "invoiceDate": "2026-11-16",
+      "hours": 1.5,
+      "items": [
+        "Studio hire + engineer",
+        "Additional camera",
+        "4K footage"
+      ],
+      "net": 180.0,
+      "vat": 36.0,
+      "amount": 216,
+      "status": "Paid",
+      "payments": [],
+      "notes": "Second Natalie episode. Paid in advance on 16 Nov 2026.",
+      "invoice": "invoices/INV-BDBE2818.pdf",
+      "recording": "natalie-2027-01-15"
+    },
+    {
+      "id": "e12",
+      "date": "2027-01-18",
+      "guest": "Sarah",
+      "category": "Production",
+      "supplier": "Podcast Room (London Bridge)",
+      "ref": "INV-292164FF",
+      "invoiceDate": "2026-11-16",
+      "hours": 1.5,
+      "items": [
+        "Studio hire + engineer",
+        "Additional camera",
+        "4K footage"
+      ],
+      "net": 180.0,
+      "vat": 36.0,
+      "amount": 216,
+      "status": "Paid",
+      "payments": [],
+      "notes": "Paid in advance on 16 Nov 2026.",
+      "invoice": "invoices/INV-292164FF.pdf"
+    },
+    {
+      "id": "e13",
+      "date": "2026-11-16",
+      "guest": "",
+      "category": "Design & branding",
+      "supplier": "Brand designer",
+      "ref": "",
+      "hours": 0,
+      "items": [
+        "Brand assets"
+      ],
+      "description": "Brand designer fee for the BFP brand assets",
+      "amount": 379.13,
+      "currency": "USD",
+      "originalAmount": 500,
+      "fxRate": 0.7583,
+      "fxEstimated": true,
+      "status": "Invoiced",
+      "payments": [],
+      "notes": "US$500 converted at 0.7583 (x-rates, 16 Nov 2026). Replace with the GBP amount on the bank statement.",
+      "invoice": ""
     }
   ],
   "bookings": [
@@ -202,6 +336,67 @@
       "hospitalityPlan": "",
       "hospitalityBudget": null,
       "notes": "Cancelled. Booking and invoice moved to Asha (19 Nov)."
+    },
+    {
+      "id": "b3",
+      "date": "2026-11-27",
+      "guest": "Emily",
+      "status": "Confirmed",
+      "package": "3 cams, 4K footage, 1.5h",
+      "studioCost": 216,
+      "ref": "INV-7E846BE1",
+      "hospitalityPlan": "",
+      "hospitalityBudget": null,
+      "notes": "Studio paid 16 Nov 2026. Hanover Square studio."
+    },
+    {
+      "id": "b4",
+      "date": "2026-12-16",
+      "guest": "Peter (channel intro)",
+      "status": "Confirmed",
+      "package": "4K footage, 1h",
+      "studioCost": 108,
+      "ref": "INV-14C108A9",
+      "hospitalityPlan": "",
+      "hospitalityBudget": null,
+      "notes": "Studio paid 16 Nov 2026."
+    },
+    {
+      "id": "b5",
+      "date": "2026-12-17",
+      "guest": "Gary",
+      "status": "Confirmed",
+      "package": "3 cams, 4K footage, 1.5h",
+      "studioCost": 216,
+      "ref": "INV-399F5C60",
+      "hospitalityPlan": "",
+      "hospitalityBudget": null,
+      "notes": "Studio paid 16 Nov 2026."
+    },
+    {
+      "id": "b6",
+      "date": "2027-01-15",
+      "guest": "Natalie",
+      "status": "Confirmed",
+      "package": "3 cams, 4K footage, 1.5h",
+      "studioCost": 216,
+      "ref": "INV-BDBE2818",
+      "hospitalityPlan": "",
+      "hospitalityBudget": null,
+      "notes": "Studio paid 16 Nov 2026.",
+      "recording": "natalie-2027-01-15"
+    },
+    {
+      "id": "b7",
+      "date": "2027-01-18",
+      "guest": "Sarah",
+      "status": "Confirmed",
+      "package": "3 cams, 4K footage, 1.5h",
+      "studioCost": 216,
+      "ref": "INV-292164FF",
+      "hospitalityPlan": "",
+      "hospitalityBudget": null,
+      "notes": "Studio paid 16 Nov 2026."
     }
   ]
 }

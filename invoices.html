@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BFP Invoices</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-0.5 -0.5 6 6'%3E%3Crect x='-0.5' y='-0.5' width='6' height='6' rx='1' fill='%23322E2E'/%3E%3Cg fill='%239AC634'%3E%3Cpolygon points='0,2 1,1 1,5 0,5'/%3E%3Cpolygon points='1,1 2,0 4,0 4,1'/%3E%3Crect x='4' y='1' width='1' height='2'/%3E%3Cpolygon points='1.15,4 2,3 4,3 4,4'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FCFBF5; --bistre:#322E2E; --green:#9AC634; --green-ink:#5B7F17;
+    --paper:#FFFFFF; --line:#E7E4D9; --line-strong:#D3CFC2;
+    --ink:#322E2E; --ink-2:#6B6560; --ink-3:#9A948C;
+    --c-production:#6E9A1E; --c-kit:#1F78A8; --c-hospitality:#C9703A; --c-design:#8A5AA6; --c-coaching:#B8860B; --c-other:#C2477A;
+    --good:#3E7D1E; --crit:#B3261E; --radius:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--cream)}
+  body{color:var(--ink);font-family:'Inter Tight',system-ui,sans-serif;font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+  .num{font-variant-numeric:tabular-nums}
+  header.hero{background:var(--bistre);color:var(--cream);position:relative;overflow:hidden}
+  header.hero::after{content:"";position:absolute;inset:0;opacity:.07;pointer-events:none;background-image:linear-gradient(135deg,var(--cream) 25%,transparent 25%),linear-gradient(135deg,transparent 75%,var(--cream) 75%);background-size:44px 44px}
+  .hero-in{position:relative;z-index:1;padding:28px 24px 40px}
+  .brandrow{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .lockup{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--cream)}
+  .lockup svg{width:34px;height:34px}
+  .lockup span{font-family:'Anton',sans-serif;font-size:15px;line-height:1.05;text-transform:uppercase}
+  .hero h1{font-family:'Anton',sans-serif;font-weight:400;font-size:clamp(40px,7vw,80px);line-height:.95;margin-top:36px}
+  .hero h1 .br{color:var(--green)}
+  .hero p{color:#CFCABE;margin-top:12px;max-width:620px}
+  .btn{appearance:none;border:1px solid rgba(252,251,245,.3);background:transparent;color:var(--cream);font:600 14px 'Inter Tight',sans-serif;padding:9px 16px;border-radius:10px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+  .btn:hover{border-color:var(--cream)}
+  .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:-26px;position:relative;z-index:2}
+  .tile{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;cursor:pointer;text-align:left;font:inherit;color:inherit}
+  .tile:hover,.tile.on{border-color:var(--ink)}
+  .tile.total{background:var(--bistre);color:var(--cream);border-color:var(--bistre)}
+  .tile .k{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--ink-2)}
+  .tile.total .k{color:#BDB8AC}
+  .tile .k i{width:10px;height:10px;border-radius:3px}
+  .tile .v{font-family:'Anton',sans-serif;font-size:28px;line-height:1.1;margin-top:6px}
+  .tile.total .v{color:var(--green)}
+  .tile .c{font-size:12.5px;color:var(--ink-2)} .tile.total .c{color:#BDB8AC}
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin-top:24px}
+  .toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+  .search{flex:1;min-width:200px;border:1px solid var(--line-strong);border-radius:10px;padding:9px 12px;font:14px 'Inter Tight',sans-serif;background:var(--paper);color:var(--ink)}
+  .tog{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-2)}
+  .tablewrap{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:980px}
+  th{text-align:left;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--ink-2);padding:10px;border-bottom:1px solid var(--line-strong);cursor:pointer;white-space:nowrap;user-select:none}
+  td{padding:12px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  .r{text-align:right}
+  #tbl td:nth-child(3){min-width:260px} #tbl td:nth-child(5){min-width:150px} #tbl td:nth-child(2){white-space:nowrap}
+  .ref{font-family:ui-monospace,Menlo,monospace;font-size:13px;font-weight:600;white-space:nowrap}
+  .noref{color:var(--ink-3);font-size:12.5px;font-style:italic}
+  .sub{font-size:12.5px;color:var(--ink-3)}
+  .pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:3px 9px;border-radius:999px;background:#F1EFE6;white-space:nowrap}
+  .pill i{width:8px;height:8px;border-radius:2px}
+  .st{font-size:12px;font-weight:700;padding:3px 8px;border-radius:6px;white-space:nowrap}
+  .st.Paid{background:#E6F0D8;color:var(--good)} .st.Invoiced{background:#F1EFE6;color:var(--ink-2)} .st.Unpaid{background:#FBEFEE;color:var(--crit)}
+  .fx{display:inline-block;font-size:11px;font-weight:700;background:#F6EBDD;color:#8A4A12;border-radius:5px;padding:1px 6px;margin-top:3px}
+  .dl{display:inline-flex;align-items:center;gap:6px;font:600 13px 'Inter Tight',sans-serif;color:var(--bistre);background:var(--green);border-radius:8px;padding:6px 11px;text-decoration:none;white-space:nowrap}
+  .dl.off{background:#F1EFE6;color:var(--ink-3);pointer-events:none}
+  .dl svg{width:14px;height:14px}
+  tfoot td{font-weight:700;border-bottom:0;padding-top:14px}
+  .note{font-size:13px;color:var(--ink-2);margin-top:14px}
+  code{font-family:ui-monospace,Menlo,monospace;font-size:12.5px;background:#F1EFE6;border-radius:5px;padding:1px 5px}
+  footer{margin:56px 0 0;background:var(--bistre);color:#BDB8AC;font-size:13px}
+  footer .wrap{padding-top:22px;padding-bottom:22px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  @media (max-width:560px){.wrap{padding:0 16px}.hero-in{padding:22px 16px 36px}.card{padding:14px}}
+</style>
+</head>
+<body>
+<header class="hero"><div class="wrap hero-in">
+  <div class="brandrow">
+    <a class="lockup" href="index.html"><svg viewBox="0 0 5 5" aria-hidden="true"><g fill="#9AC634"><polygon points="0,2 1,1 1,5 0,5"/><polygon points="1,1 2,0 4,0 4,1"/><rect x="4" y="1" width="1" height="2"/><polygon points="1.15,4 2,3 4,3 4,4"/></g></svg><span>Built for<br>performance</span></a>
+    <a class="btn" href="index.html">&larr; Back to dashboard</a>
+  </div>
+  <h1><span class="br">[</span> Invoice register <span class="br">]</span></h1>
+  <p>Every invoice number and amount, with the PDF to download. Click a category to filter.</p>
+</div></header>
+
+<main class="wrap">
+  <div class="tiles" id="tiles"></div>
+  <div class="card">
+    <div class="toolbar">
+      <input class="search" id="q" type="search" placeholder="Search invoice number, guest, supplier or description">
+      <label class="tog"><input type="checkbox" id="miss"> Missing PDF only</label>
+    </div>
+    <div class="tablewrap"><table id="tbl"></table></div>
+    <p class="note">PDFs live in the <code>invoices</code> folder of the GitHub repo, named by invoice number, e.g. <code>INV-7E846BE1.pdf</code>. Upload a PDF with that name and its Download button switches on.</p>
+  </div>
+</main>
+<footer><div class="wrap"><span>Built for Performance &middot; Vidos Solutions</span><span>Invoice register</span></div></footer>
+
+<script id="fallback" type="application/json">{
+  "meta": {
+    "title": "BFP podcast finance",
+    "currency": "GBP",
+    "github": {
+      "owner": "Wanjiru-mugo",
+      "repo": "bfp_finance",
+      "branch": "main"
+    },
+    "categories": [
+      "Production",
+      "Kit & accessories",
+      "Hospitality",
+      "Design & branding",
+      "Coaching",
+      "Other"
+    ],
+    "knownIssues": [
+      "Missing invoice: advanced editing for the 15 May 2026 recording with Raynee.",
+      "Coaching invoices not added yet."
+    ],
+    "editingStatuses": [
+      "Paid",
+      "Pending",
+      "Not invoiced",
+      "Not needed"
+    ],
+    "invoiceFolder": "invoices",
+    "bookingStatuses": [
+      "Provisional",
+      "Confirmed",
+      "Cancelled"
+    ]
+  },
+  "entries": [
+    {
+      "id": "e1",
+      "date": "2026-03-02",
+      "guest": "Micah",
+      "category": "Production",
+      "supplier": "Recording studio",
+      "ref": "INV-B8438A47",
+      "hours": 2,
+      "items": [
+        "Studio hire + engineer",
+        "Advanced editing",
+        "Social media snippets"
+      ],
+      "amount": 492,
+      "status": "Paid",
+      "payments": [
+        {
+          "date": "2026-02-16",
+          "amount": 180
+        },
+        {
+          "date": "2026-03-20",
+          "amount": 312
+        }
+      ],
+      "notes": "Paid in two instalments.",
+      "editing": "Paid",
+      "editingNote": "Included in INV-B8438A47 (£492), paid in two instalments.",
+      "invoice": "invoices/INV-B8438A47.pdf"
+    },
+    {
+      "id": "e2",
+      "date": "2026-05-15",
+      "guest": "Raynee",
+      "category": "Production",
+      "supplier": "Recording studio",
+      "ref": "INV-2026-6653",
+      "hours": 1.5,
+      "items": [
+        "Studio hire + engineer",
+        "Additional camera",
+        "4K footage"
+      ],
+      "amount": 180,
+      "status": "Invoiced",
+      "payments": [],
+      "notes": "Advanced editing invoice for this recording is missing.",
+      "editing": "Pending",
+      "editingNote": "Editing done but the invoice is missing from Notion.",
+      "invoice": "invoices/INV-2026-6653.pdf"
+    },
+    {
+      "id": "e3",
+      "date": "2026-08-20",
+      "guest": "Reece",
+      "category": "Production",
+      "supplier": "Recording studio",
+      "ref": "INV-8F53A0D3",
+      "hours": 2,
+      "items": [
+        "Studio hire + engineer",
+        "Additional camera",
+        "Advanced editing",
+        "4K footage",
+        "Teleprompter"
+      ],
+      "amount": 516,
+      "status": "Paid",
+      "payments": [
+        {
+          "date": "2026-07-24",
+          "amount": 288
+        },
+        {
+          "date": "2026-08-20",
+          "amount": 228
+        }
+      ],
+      "notes": "Paid in two instalments.",
+      "editing": "Paid",
+      "editingNote": "Included in INV-8F53A0D3 (£516), paid in two instalments.",
+      "invoice": "invoices/INV-8F53A0D3.pdf"
+    },
+    {
+      "id": "e5",
+      "date": "2026-10-22",
+      "guest": "Paul",
+      "category": "Production",
+      "supplier": "Recording studio",
+      "ref": "INV-0F441BB6",
+      "hours": 1.5,
+      "items": [
+        "Studio hire + engineer",
+        "Additional camera",
+        "4K footage"
+      ],
+      "amount": 216,
+      "status": "Invoiced",
+      "payments": [],
+      "notes": "",
+      "editing": "Not invoiced",
+      "editingNote": "",
+      "invoice": "invoices/INV-0F441BB6.pdf"
+    },
+    {
+      "id": "e6",
+      "date": "2026-10-30",
+      "guest": "Natalie",
+      "category": "Production",
+      "supplier": "Recording studio",
+      "ref": "INV-1B82E605",
+      "hours": 1.5,
+      "items": [
+        "Studio hire + engineer",
+        "Additional camera",
+        "4K footage"
+      ],
+      "amount": 216,
+      "status": "Invoiced",
+      "payments": [],
+      "notes": "",
+      "editing": "Not invoiced",
+      "editingNote": "",
+      "invoice": "invoices/INV-1B82E605.pdf"
+    },
+    {
+      "id": "e7",
+      "date": "2026-11-19",
+      "guest": "Asha",
+      "category": "Production",
+      "supplier": "Recording studio",
+      "ref": "INV-A0851789",
+      "hours": 1.5,
+      "items": [
+        "Studio hire + engineer",
+        "Additional camera",
+        "4K footage"
+      ],
+      "amount": 216,
+      "status": "Invoiced",
+      "payments": [],
+      "notes": "Invoice INV-A0851789 was originally for Jaak's 16 Oct slot. Transferred to Asha after Jaak cancelled.",
+      "editing": "Not invoiced",
+      "editingNote": "",
+      "invoice": "invoices/INV-A0851789.pdf"
+    },
+    {
+      "id": "e8",
+      "date": "2026-11-27",
+      "guest": "Emily",
+      "category": "Production",
+      "supplier": "Podcast Room (Hanover Square)",
+      "ref": "INV-7E846BE1",
+      "invoiceDate": "2026-11-16",
+      "hours": 1.5,
+      "items": [
+        "Studio hire + engineer",
+        "Additional camera",
+        "4K footage"
+      ],
+      "net": 180.0,
+      "vat": 36.0,
+      "amount": 216,
+      "status": "Paid",
+      "payments": [],
+      "notes": "Paid in advance on 16 Nov 2026.",
+      "invoice": "invoices/INV-7E846BE1.pdf"
+    },
+    {
+      "id": "e9",
+      "date": "2026-12-16",
+      "guest": "Peter (channel intro)",
+      "category": "Production",
+      "supplier": "Podcast Room (London Bridge)",
+      "ref": "INV-14C108A9",
+      "invoiceDate": "2026-11-16",
+      "hours": 1,
+      "items": [
+        "Studio hire + engineer",
+        "4K footage"
+      ],
+      "net": 90.0,
+      "vat": 18.0,
+      "amount": 108,
+      "status": "Paid",
+      "payments": [],
+      "notes": "Channel intro recording. Paid in advance on 16 Nov 2026.",
+      "invoice": "invoices/INV-14C108A9.pdf"
+    },
+    {
+      "id": "e10",
+      "date": "2026-12-17",
+      "guest": "Gary",
+      "category": "Production",
+      "supplier": "Podcast Room (London Bridge)",
+      "ref": "INV-399F5C60",
+      "invoiceDate": "2026-11-16",
+      "hours": 1.5,
+      "items": [
+        "Studio hire + engineer",
+        "Additional camera",
+        "4K footage"
+      ],
+      "net": 180.0,
+      "vat": 36.0,
+      "amount": 216,
+      "status": "Paid",
+      "payments": [],
+      "notes": "Paid in advance on 16 Nov 2026.",
+      "invoice": "invoices/INV-399F5C60.pdf"
+    },
+    {
+      "id": "e11",
+      "date": "2027-01-15",
+      "guest": "Natalie",
+      "category": "Production",
+      "supplier": "Podcast Room (London Bridge)",
+      "ref": "INV-BDBE2818",
+      "invoiceDate": "2026-11-16",
+      "hours": 1.5,
+      "items": [
+        "Studio hire + engineer",
+        "Additional camera",
+        "4K footage"
+      ],
+      "net": 180.0,
+      "vat": 36.0,
+      "amount": 216,
+      "status": "Paid",
+      "payments": [],
+      "notes": "Second Natalie episode. Paid in advance on 16 Nov 2026.",
+      "invoice": "invoices/INV-BDBE2818.pdf",
+      "recording": "natalie-2027-01-15"
+    },
+    {
+      "id": "e12",
+      "date": "2027-01-18",
+      "guest": "Sarah",
+      "category": "Production",
+      "supplier": "Podcast Room (London Bridge)",
+      "ref": "INV-292164FF",
+      "invoiceDate": "2026-11-16",
+      "hours": 1.5,
+      "items": [
+        "Studio hire + engineer",
+        "Additional camera",
+        "4K footage"
+      ],
+      "net": 180.0,
+      "vat": 36.0,
+      "amount": 216,
+      "status": "Paid",
+      "payments": [],
+      "notes": "Paid in advance on 16 Nov 2026.",
+      "invoice": "invoices/INV-292164FF.pdf"
+    },
+    {
+      "id": "e13",
+      "date": "2026-11-16",
+      "guest": "",
+      "category": "Design & branding",
+      "supplier": "Brand designer",
+      "ref": "",
+      "hours": 0,
+      "items": [
+        "Brand assets"
+      ],
+      "description": "Brand designer fee for the BFP brand assets",
+      "amount": 379.13,
+      "currency": "USD",
+      "originalAmount": 500,
+      "fxRate": 0.7583,
+      "fxEstimated": true,
+      "status": "Invoiced",
+      "payments": [],
+      "notes": "US$500 converted at 0.7583 (x-rates, 16 Nov 2026). Replace with the GBP amount on the bank statement.",
+      "invoice": ""
+    }
+  ],
+  "bookings": [
+    {
+      "id": "b1",
+      "date": "2026-11-19",
+      "guest": "Asha",
+      "status": "Confirmed",
+      "package": "1.5h hire + engineer, additional camera, 4K footage",
+      "studioCost": 216,
+      "ref": "INV-A0851789",
+      "hospitalityPlan": "",
+      "hospitalityBudget": null,
+      "notes": "Took over Jaak's cancelled 16 Oct booking. Invoice transferred, no extra charge."
+    },
+    {
+      "id": "b2",
+      "date": "2026-10-16",
+      "guest": "Jaak",
+      "status": "Cancelled",
+      "package": "1.5h hire + engineer, additional camera, 4K footage",
+      "studioCost": 0,
+      "ref": "INV-A0851789",
+      "hospitalityPlan": "",
+      "hospitalityBudget": null,
+      "notes": "Cancelled. Booking and invoice moved to Asha (19 Nov)."
+    },
+    {
+      "id": "b3",
+      "date": "2026-11-27",
+      "guest": "Emily",
+      "status": "Confirmed",
+      "package": "3 cams, 4K footage, 1.5h",
+      "studioCost": 216,
+      "ref": "INV-7E846BE1",
+      "hospitalityPlan": "",
+      "hospitalityBudget": null,
+      "notes": "Studio paid 16 Nov 2026. Hanover Square studio."
+    },
+    {
+      "id": "b4",
+      "date": "2026-12-16",
+      "guest": "Peter (channel intro)",
+      "status": "Confirmed",
+      "package": "4K footage, 1h",
+      "studioCost": 108,
+      "ref": "INV-14C108A9",
+      "hospitalityPlan": "",
+      "hospitalityBudget": null,
+      "notes": "Studio paid 16 Nov 2026."
+    },
+    {
+      "id": "b5",
+      "date": "2026-12-17",
+      "guest": "Gary",
+      "status": "Confirmed",
+      "package": "3 cams, 4K footage, 1.5h",
+      "studioCost": 216,
+      "ref": "INV-399F5C60",
+      "hospitalityPlan": "",
+      "hospitalityBudget": null,
+      "notes": "Studio paid 16 Nov 2026."
+    },
+    {
+      "id": "b6",
+      "date": "2027-01-15",
+      "guest": "Natalie",
+      "status": "Confirmed",
+      "package": "3 cams, 4K footage, 1.5h",
+      "studioCost": 216,
+      "ref": "INV-BDBE2818",
+      "hospitalityPlan": "",
+      "hospitalityBudget": null,
+      "notes": "Studio paid 16 Nov 2026.",
+      "recording": "natalie-2027-01-15"
+    },
+    {
+      "id": "b7",
+      "date": "2027-01-18",
+      "guest": "Sarah",
+      "status": "Confirmed",
+      "package": "3 cams, 4K footage, 1.5h",
+      "studioCost": 216,
+      "ref": "INV-292164FF",
+      "hospitalityPlan": "",
+      "hospitalityBudget": null,
+      "notes": "Studio paid 16 Nov 2026."
+    }
+  ]
+}
+</script>
+<script>
+(function(){
+  const CAT_COLOR={"Production":"var(--c-production)","Kit & accessories":"var(--c-kit)","Hospitality":"var(--c-hospitality)","Design & branding":"var(--c-design)","Coaching":"var(--c-coaching)","Other":"var(--c-other)"};
+  const CATS=Object.keys(CAT_COLOR);
+  const PD=v=>{const m=/^(\d{4})-(\d{2})(?:-(\d{2}))?$/.exec(String(v));return m?new Date(+m[1],+m[2]-1,+(m[3]||1)):new Date(v)};
+  const fmtD=d=>d?PD(d).toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"}):"";
+  const gbp=n=>n==null||n===""?"":"£"+Number(n).toLocaleString("en-GB",{minimumFractionDigits:2,maximumFractionDigits:2});
+  const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  const $=s=>document.querySelector(s);
+  const DL=`<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v8M4.5 6.5 8 10l3.5-3.5M3 13h10"/></svg>`;
+  let DATA,rows=[],INV={},st={cat:"All",q:"",miss:false,sort:"date",dir:-1};
+  const drafts=()=>{try{return JSON.parse(localStorage.getItem("bfp-finance-drafts-v1")||"[]")}catch(e){return[]}};
+
+  async function load(){
+    try{const r=await fetch("data.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)throw 0;DATA=await r.json()}
+    catch(e){DATA=JSON.parse(document.getElementById("fallback").textContent)}
+    rows=DATA.entries.concat(drafts().map(e=>({...e,_draft:true})));
+    render();
+    if(location.protocol!=="file:"){
+      const files=[...new Set(rows.map(e=>e.invoice).filter(Boolean))];
+      await Promise.all(files.map(f=>fetch(encodeURI(f),{method:"HEAD",cache:"no-store"}).then(r=>INV[f]=r.ok).catch(()=>INV[f]=false)));
+      render();
+    }
+  }
+  const forWhat=e=>e.description||(e.guest?`${e.guest}${e.items&&e.items.length?": "+e.items.join(", "):""}`:(e.items||[]).join(", "));
+
+  function render(){
+    const sum=l=>l.reduce((s,e)=>s+ +e.amount,0);
+    $("#tiles").innerHTML=`<button class="tile total ${st.cat==="All"?"on":""}" data-c="All"><div class="k">All invoices</div><div class="v num">${gbp(sum(rows))}</div><div class="c">${rows.length} lines</div></button>`+
+      CATS.map(c=>{const l=rows.filter(e=>e.category===c);return `<button class="tile ${st.cat===c?"on":""}" data-c="${c}"><div class="k"><i style="background:${CAT_COLOR[c]}"></i>${c}</div><div class="v num">${gbp(sum(l))}</div><div class="c">${l.length} line${l.length===1?"":"s"}</div></button>`}).join("");
+    document.querySelectorAll(".tile").forEach(b=>b.onclick=()=>{st.cat=b.dataset.c;render()});
+    const q=st.q.toLowerCase();
+    let list=rows.filter(e=>(st.cat==="All"||e.category===st.cat)&&(!st.miss||!e.invoice||INV[e.invoice]===false)&&(!q||[e.ref,e.guest,e.supplier,e.description,(e.items||[]).join(" "),e.category].join(" ").toLowerCase().includes(q)));
+    const k=st.sort;list.sort((a,b)=>{const A=k==="amount"?+a.amount:String(a[k]||""),B=k==="amount"?+b.amount:String(b[k]||"");return (A>B?1:A<B?-1:0)*st.dir});
+    const th=(key,lab,cls="")=>`<th class="${cls}" data-k="${key}">${lab}${st.sort===key?(st.dir>0?" ↑":" ↓"):""}</th>`;
+    const tn=list.reduce((s,e)=>s+(e.net!=null?+e.net:0),0),tv=list.reduce((s,e)=>s+(e.vat!=null?+e.vat:0),0);
+    $("#tbl").innerHTML=`<thead><tr>${th("ref","Invoice no.")}${th("date","Date")}<th>For</th>${th("category","Category")}${th("supplier","Supplier")}<th class="r">Net</th><th class="r">VAT</th>${th("amount","Total","r")}${th("status","Status")}<th>PDF</th></tr></thead><tbody>`+
+      list.map(e=>{const miss=!e.invoice||INV[e.invoice]===false;
+        return `<tr><td>${e.ref?`<span class="ref">${esc(e.ref)}</span>`:`<span class="noref">No invoice no.</span>`}${e._draft?` <span class="sub">(local)</span>`:""}</td>
+        <td class="num" style="white-space:nowrap">${fmtD(e.date)}${e.invoiceDate&&e.invoiceDate!==e.date?`<div class="sub">Issued ${fmtD(e.invoiceDate)}</div>`:""}</td>
+        <td>${esc(forWhat(e))}${e.notes?`<div class="sub" title="${esc(e.notes)}">${esc(e.notes.length>60?e.notes.slice(0,58)+"…":e.notes)}</div>`:""}</td>
+        <td><span class="pill"><i style="background:${CAT_COLOR[e.category]||"#999"}"></i>${esc(e.category)}</span></td>
+        <td style="font-size:13.5px">${esc(e.supplier)}</td>
+        <td class="r num">${gbp(e.net)}</td><td class="r num">${gbp(e.vat)}</td>
+        <td class="r num"><b>${gbp(e.amount)}</b>${e.currency?`<div class="fx">${esc(e.currency)} ${esc(e.originalAmount)}${e.fxEstimated?" est.":""}</div>`:""}</td>
+        <td><span class="st ${esc(e.status)}">${esc(e.status)}</span></td>
+        <td>${e.invoice&&!miss?`<a class="dl" href="${encodeURI(e.invoice)}" download target="_blank" rel="noopener">${DL}Download</a>`:`<span class="dl off">${e.invoice?"Not uploaded":"No file"}</span>`}</td></tr>`}).join("")+
+      `</tbody><tfoot><tr><td colspan="5">${list.length} line${list.length===1?"":"s"}${st.cat!=="All"||q||st.miss?" (filtered)":""}</td><td class="r num">${tn?gbp(tn):""}</td><td class="r num">${tv?gbp(tv):""}</td><td class="r num">${gbp(list.reduce((s,e)=>s+ +e.amount,0))}</td><td colspan="2"></td></tr></tfoot>`;
+    document.querySelectorAll("th[data-k]").forEach(t=>t.onclick=()=>{const kk=t.dataset.k;st.dir=st.sort===kk?-st.dir:1;st.sort=kk;render()});
+  }
+  $("#q").addEventListener("input",e=>{st.q=e.target.value;render()});
+  $("#miss").addEventListener("change",e=>{st.miss=e.target.checked;render()});
+  load();
+})();
+</script>
+</body>
+</html>
